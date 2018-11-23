@@ -2,7 +2,6 @@
 -- Author:      Matt Middleton
 -- Create Date: 2018-11-23 
 -- ============================================================================
-
 CREATE PROCEDURE Create_ContactDetail
 (
     @Person_Id BIGINT,

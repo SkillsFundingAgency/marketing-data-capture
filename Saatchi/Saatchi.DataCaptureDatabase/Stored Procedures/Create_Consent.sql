@@ -2,7 +2,6 @@
 -- Author:      Matt Middleton
 -- Create Date: 2018-11-23 
 -- ============================================================================
-
 CREATE PROCEDURE Create_Consent
 (
     @Person_Id BIGINT,
