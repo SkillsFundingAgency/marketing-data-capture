@@ -60,6 +60,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables\" />
+    <Folder Include="Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
@@ -67,5 +68,10 @@
     <Build Include="Tables\Route.sql" />
     <Build Include="Tables\Cookie.sql" />
     <Build Include="Tables\Consent.sql" />
+    <Build Include="Stored Procedures\Create_Route.sql" />
+    <Build Include="Stored Procedures\Create_Person.sql" />
+    <Build Include="Stored Procedures\Create_Cookie.sql" />
+    <Build Include="Stored Procedures\Create_ContactDetail.sql" />
+    <Build Include="Stored Procedures\Create_Consent.sql" />
   </ItemGroup>
 </Project>
