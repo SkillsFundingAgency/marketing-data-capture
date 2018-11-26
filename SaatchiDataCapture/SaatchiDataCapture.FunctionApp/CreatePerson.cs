@@ -1,4 +1,4 @@
-namespace Saatchi.DataCaptureFunctionApp
+namespace SaatchiDataCapture.FunctionApp
 {
     using System.IO;
     using Microsoft.AspNetCore.Mvc;
@@ -13,20 +13,24 @@ namespace Saatchi.DataCaptureFunctionApp
         [FunctionName("create-person")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = null)]
-            HttpRequest req,
-            TraceWriter log)
+            HttpRequest httpRequest,
+            TraceWriter traceWriter)
         {
-            log.Info("C# HTTP trigger function processed a request.");
+            IActionResult toReturn = null;
 
-            string name = req.Query["name"];
+            traceWriter.Info("C# HTTP trigger function processed a request.");
 
-            string requestBody = new StreamReader(req.Body).ReadToEnd();
+            string name = httpRequest.Query["name"];
+
+            string requestBody = new StreamReader(httpRequest.Body).ReadToEnd();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name = name ?? data?.name;
 
-            return name != null
+            toReturn = name != null
                 ? (ActionResult)new OkObjectResult($"Hello, {name}")
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+
+            return toReturn;
         }
     }
 }
