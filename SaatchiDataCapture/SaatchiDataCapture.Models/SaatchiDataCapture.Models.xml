@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SaatchiDataCapture.Models</name>
+    </assembly>
+    <members>
+        <member name="T:SaatchiDataCapture.Models.ModelsBase">
+            <summary>
+            Abstract base class for all models in the
+            <c>SaatchiDataCapture.Models</c> namespace.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.Models.Person">
+            <summary>
+            Represents a person.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+        </member>
+    </members>
+</doc>

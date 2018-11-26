@@ -1,16 +1,29 @@
 ﻿namespace SaatchiDataCapture.Logic
 {
+    using System;
     using Meridian.InterSproc;
     using SaatchiDataCapture.Data.Definitions;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
-    using System;
 
+    /// <summary>
+    /// Implements <see cref="IPersonManager" />.
+    /// </summary>
     public class PersonManager : IPersonManager
     {
         private readonly IDataCaptureDatabaseContract dataCaptureDatabaseContract;
         private readonly ILoggerProvider loggerProvider;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="PersonManager" />
+        /// class.
+        /// </summary>
+        /// <param name="loggerProvider">
+        /// An instance of type <see cref="ILoggerProvider" />.
+        /// </param>
+        /// <param name="personManagerSettingsProvider">
+        /// An instance of type <see cref="IPersonManagerSettingsProvider" />.
+        /// </param>
         public PersonManager(
             ILoggerProvider loggerProvider,
             IPersonManagerSettingsProvider personManagerSettingsProvider)
@@ -25,14 +38,15 @@
                     dataCaptureDatabaseConnectionString);
         }
 
+        /// <inheritdoc />
         public void Create(Person person)
         {
             this.loggerProvider.Info(
                 $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.Create_Person)}...");
+                $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.CreatePerson)}...");
 
             Data.Models.CreatedEntityReference createdEntityReference =
-                this.dataCaptureDatabaseContract.Create_Person(
+                this.dataCaptureDatabaseContract.CreatePerson(
                     DateTime.Now,
                     DateTime.Now,
                     "Test",

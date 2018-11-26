@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SaatchiDataCapture.Data</name>
+    </assembly>
+    <members>
+        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract">
+            <summary>
+            Describes the stored procedures exposed by the data capture database.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)">
+            <summary>
+            Executes the <c>Create_Person</c> stored procedure.
+            </summary>
+            <param name="created">
+            Provides the <c>@Created</c> parameter.
+            </param>
+            <param name="enrolled">
+            Provides the <c>@Enrolled</c> parameter.
+            </param>
+            <param name="firstName">
+            Provides the <c>@FirstName</c> parameter.
+            </param>
+            <param name="lastName">
+            Provides the <c>@LastName</c> parameter.
+            </param>
+            <returns>
+            An instance of type <see cref="T:SaatchiDataCapture.Data.Models.CreatedEntityReference" />.
+            </returns>
+        </member>
+        <member name="T:SaatchiDataCapture.Data.Models.CreatedEntityReference">
+            <summary>
+            Represents a reference to a created database entity.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.Data.Models.ModelsBase">
+            <summary>
+            Abstract base class for all models in the
+            <c>SaatchiDataCapture.Data</c> namespace.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Data.Models.ModelsBase.Id">
+            <summary>
+            Gets or sets the id of the inheriting entity.
+            </summary>
+        </member>
+    </members>
+</doc>

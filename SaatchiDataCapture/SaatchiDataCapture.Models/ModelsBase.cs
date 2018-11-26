@@ -1,8 +1,12 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace SaatchiDataCapture.Models
 {
     using Meridian.MeaningfulToString;
 
-    public abstract class ModelsBase : MeaningfulBase
+    /// <summary>
+    /// Abstract base class for all models in the
+    /// <c>SaatchiDataCapture.Models</c> namespace.
+    /// </summary>
+    public abstract class ModelsBase : Common.Models.ModelsBase
     {
     }
 }
