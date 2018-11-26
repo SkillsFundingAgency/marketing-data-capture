@@ -1,10 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Other -->
+    <PackageReference Include="Meridian.InterSproc" Version="2.1.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SaatchiDataCapture.Data\SaatchiDataCapture.Data.csproj" />
     <ProjectReference Include="..\SaatchiDataCapture.Models\SaatchiDataCapture.Models.csproj" />
   </ItemGroup>
 

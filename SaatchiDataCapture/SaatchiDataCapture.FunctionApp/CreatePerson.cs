@@ -8,8 +8,8 @@ namespace SaatchiDataCapture.FunctionApp
     using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
     using SaatchiDataCapture.Logic.Definitions;
+    using SaatchiDataCapture.Models;
     using StructureMap;
-    using StructureMap.Graph.Scanning;
 
     /// <summary>
     /// Entry class for the <c>create-person</c> function.
@@ -36,19 +36,72 @@ namespace SaatchiDataCapture.FunctionApp
         {
             IActionResult toReturn = null;
 
+            // Get our entry point in the logic layer and...
+            IPersonManager personManager =
+                GetIPersonManagerInstance(traceWriter);
+
+            Person person = ParseRequestBody(httpRequest, traceWriter);
+
+            traceWriter.Info(
+                $"Invoking " +
+                $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)}...");
+
+            personManager.Create(person);
+
+            traceWriter.Info(
+                $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)} " +
+                $"invoked with success.");
+
+            toReturn = new OkObjectResult("TODO...");
+
+            return toReturn;
+        }
+
+        private static Person ParseRequestBody(
+            HttpRequest httpRequest,
+            TraceWriter traceWriter)
+        {
+            Person toReturn = null;
+
+            traceWriter.Info("Reading the request body...");
+
+            string requestBody = null;
+            using (StreamReader streamReader = new StreamReader(httpRequest.Body))
+            {
+                requestBody = streamReader.ReadToEnd();
+            }
+
+            traceWriter.Info(
+                $"Request body: \"{requestBody}\". Parsing body into " +
+                $"{nameof(Person)} instance...");
+
+            toReturn = JsonConvert.DeserializeObject<Person>(requestBody);
+
+            traceWriter.Info($"Parsed: {toReturn}.");
+
+            return toReturn;
+        }
+
+        private static IPersonManager GetIPersonManagerInstance(
+            TraceWriter traceWriter)
+        {
+            IPersonManager toReturn = null;
+
             traceWriter.Info(
                 $"Pulling back an instance of {nameof(IPersonManager)}...");
 
             Registry registry = new Registry();
             Container container = new Container(registry);
 
-            IPersonManager personManager =
-                container.GetInstance<IPersonManager>();
+            IPersonManagerFactory personManagerFactory =
+                container.GetInstance<IPersonManagerFactory>();
+
+            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
+
+            toReturn = personManagerFactory.Create(loggerProvider);
 
             traceWriter.Info(
                 $"Instance of {nameof(IPersonManager)} pulled back.");
-
-            toReturn = new OkObjectResult("TODO...");
 
             return toReturn;
         }

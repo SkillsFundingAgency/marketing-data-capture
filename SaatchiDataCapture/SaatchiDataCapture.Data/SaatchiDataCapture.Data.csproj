@@ -1,7 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+
+    <!-- Other -->
+    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
+
+  </ItemGroup>
 
 </Project>

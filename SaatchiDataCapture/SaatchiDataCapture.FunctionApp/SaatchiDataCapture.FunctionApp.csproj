@@ -11,9 +11,11 @@
   
   <ItemGroup>
     <!-- Microsoft -->
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.13" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.13" PrivateAssets="All" />
 
     <!-- Other -->
+    <PackageReference Include="Meridian.InterSproc" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
     <PackageReference Include="StructureMap" Version="4.7.0" PrivateAssets="All" />
     
     <!-- Development/Non-Runtime -->
