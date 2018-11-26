@@ -1,6 +1,7 @@
 namespace SaatchiDataCapture.FunctionApp
 {
     using System.IO;
+    using System.Net;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -52,7 +53,8 @@ namespace SaatchiDataCapture.FunctionApp
                 $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)} " +
                 $"invoked with success.");
 
-            toReturn = new OkObjectResult("TODO...");
+            // Return Created.
+            toReturn = new StatusCodeResult((int)HttpStatusCode.Created);
 
             return toReturn;
         }

@@ -42,6 +42,7 @@
         /// <inheritdoc />
         public void Create(Person person)
         {
+            // TODO: Validate the Person instance.
             this.loggerProvider.Info(
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.CreatePerson)}...");
