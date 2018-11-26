@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SaatchiDataCapture.FunctionApp</name>
+    </assembly>
+    <members>
+        <member name="T:SaatchiDataCapture.FunctionApp.CreatePerson">
+            <summary>
+            Entry class for the <c>create-person</c> function.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.CreatePerson.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter)">
+            <summary>
+            Entry method for the <c>create-person</c> function.
+            </summary>
+            <param name="httpRequest">
+            An instance of <see cref="T:Microsoft.AspNetCore.Http.HttpContext" />.
+            </param>
+            <param name="traceWriter">
+            An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
+            </param>
+            <returns>
+            An instance of type <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
+            </returns>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Registry">
+            <summary>
+            Custom, host-specific implementation of
+            <see cref="T:StructureMap.Registry" />.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.Registry.#ctor">
+            <summary>
+            Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Registry" /> class.
+            </summary>
+        </member>
+    </members>
+</doc>
