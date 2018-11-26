@@ -6,8 +6,8 @@ CREATE PROCEDURE Create_Consent
 (
     @Person_Id BIGINT,
     @Created DATETIME,
-	@GdprConsentDeclared DATETIME,
-	@GdprConsentGiven BIT
+	@GDPRConsentDeclared DATETIME,
+	@GDPRConsentGiven BIT
 )
 AS
 BEGIN
@@ -16,15 +16,15 @@ BEGIN
     INSERT INTO Consent (
 		Person_Id,
 		Created,
-		GdprConsentDeclared,
-		GdprConsentGiven
+		GDPRConsentDeclared,
+		GDPRConsentGiven
 	)
 	OUTPUT inserted.Id
 	VALUES (
 		@Person_Id,
 		@Created,
-		@GdprConsentDeclared,
-		@GdprConsentGiven
+		@GDPRConsentDeclared,
+		@GDPRConsentGiven
 	);
 
 END
