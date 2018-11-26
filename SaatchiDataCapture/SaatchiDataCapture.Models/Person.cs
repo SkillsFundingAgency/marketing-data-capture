@@ -1,5 +1,7 @@
 ﻿namespace SaatchiDataCapture.Models
 {
+    using System;
+
     /// <summary>
     /// Represents a person.
     /// </summary>
@@ -18,6 +20,16 @@
         /// Gets or sets the last name.
         /// </summary>
         public string LastName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DateTime" /> in which the person was
+        /// enrolled.
+        /// </summary>
+        public DateTime Enrolled
         {
             get;
             set;

@@ -25,5 +25,11 @@
             Gets or sets the last name.
             </summary>
         </member>
+        <member name="P:SaatchiDataCapture.Models.Person.Enrolled">
+            <summary>
+            Gets or sets the <see cref="T:System.DateTime" /> in which the person was
+            enrolled.
+            </summary>
+        </member>
     </members>
 </doc>

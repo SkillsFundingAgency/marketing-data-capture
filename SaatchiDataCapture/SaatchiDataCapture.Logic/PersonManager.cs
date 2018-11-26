@@ -3,6 +3,7 @@
     using System;
     using Meridian.InterSproc;
     using SaatchiDataCapture.Data.Definitions;
+    using SaatchiDataCapture.Data.Models;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
 
@@ -45,12 +46,12 @@
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.CreatePerson)}...");
 
-            Data.Models.CreatedEntityReference createdEntityReference =
+            CreatedEntityReference createdEntityReference =
                 this.dataCaptureDatabaseContract.CreatePerson(
-                    DateTime.Now,
-                    DateTime.Now,
-                    "Test",
-                    "Test");
+                    DateTime.UtcNow,
+                    person.Enrolled,
+                    person.FirstName,
+                    person.LastName);
 
             this.loggerProvider.Info(
                 $"Created: {createdEntityReference}.");
