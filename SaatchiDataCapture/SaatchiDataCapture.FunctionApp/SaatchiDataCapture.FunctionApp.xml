@@ -23,6 +23,14 @@
             An instance of type <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
             </returns>
         </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.DataCaptureDatabaseAdapterSettingsProvider">
+            <summary>
+            Implements <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.DataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
+            <inheritdoc />
+        </member>
         <member name="T:SaatchiDataCapture.FunctionApp.LoggerProvider">
             <summary>
             Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
@@ -38,14 +46,6 @@
             </param>
         </member>
         <member name="M:SaatchiDataCapture.FunctionApp.LoggerProvider.Info(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="T:SaatchiDataCapture.FunctionApp.PersonManagerSettingsProvider">
-            <summary>
-            Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider" />.
-            </summary>
-        </member>
-        <member name="P:SaatchiDataCapture.FunctionApp.PersonManagerSettingsProvider.DataCaptureDatabaseConnectionString">
             <inheritdoc />
         </member>
         <member name="T:SaatchiDataCapture.FunctionApp.Registry">

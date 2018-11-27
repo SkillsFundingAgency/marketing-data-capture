@@ -1,5 +1,6 @@
 ﻿namespace SaatchiDataCapture.Logic
 {
+    using SaatchiDataCapture.Data.Definitions;
     using SaatchiDataCapture.Logic.Definitions;
 
     /// <summary>
@@ -7,27 +8,27 @@
     /// </summary>
     public class PersonManagerFactory : IPersonManagerFactory
     {
-        private readonly IPersonManagerSettingsProvider personManagerSettingsProvider;
+        private readonly IDataCaptureDatabaseAdapter dataCaptureDatabaseAdapter;
 
         /// <summary>
         /// Initialises a new instance of the
         /// <see cref="PersonManagerFactory" /> class.
         /// </summary>
-        /// <param name="personManagerSettingsProvider">
-        /// An instance of type <see cref="IPersonManagerSettingsProvider" />.
+        /// <param name="dataCaptureDatabaseAdapter">
+        /// An instance of type <see cref="IDataCaptureDatabaseAdapter" />.
         /// </param>
         public PersonManagerFactory(
-            IPersonManagerSettingsProvider personManagerSettingsProvider)
+            IDataCaptureDatabaseAdapter dataCaptureDatabaseAdapter)
         {
-            this.personManagerSettingsProvider = personManagerSettingsProvider;
+            this.dataCaptureDatabaseAdapter = dataCaptureDatabaseAdapter;
         }
 
         /// <inheritdoc />
         public IPersonManager Create(ILoggerProvider loggerProvider)
         {
             PersonManager toReturn = new PersonManager(
-                loggerProvider,
-                this.personManagerSettingsProvider);
+                this.dataCaptureDatabaseAdapter,
+                loggerProvider);
 
             return toReturn;
         }

@@ -1,7 +1,6 @@
 ﻿namespace SaatchiDataCapture.Logic
 {
     using System;
-    using Meridian.InterSproc;
     using SaatchiDataCapture.Data.Definitions;
     using SaatchiDataCapture.Data.Models;
     using SaatchiDataCapture.Logic.Definitions;
@@ -12,31 +11,25 @@
     /// </summary>
     public class PersonManager : IPersonManager
     {
-        private readonly IDataCaptureDatabaseContract dataCaptureDatabaseContract;
+        private readonly IDataCaptureDatabaseAdapter dataCaptureDatabaseAdapter;
         private readonly ILoggerProvider loggerProvider;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="PersonManager" />
         /// class.
         /// </summary>
+        /// <param name="dataCaptureDatabaseAdapter">
+        /// An instance of type <see cref="IDataCaptureDatabaseAdapter" />.
+        /// </param>
         /// <param name="loggerProvider">
         /// An instance of type <see cref="ILoggerProvider" />.
         /// </param>
-        /// <param name="personManagerSettingsProvider">
-        /// An instance of type <see cref="IPersonManagerSettingsProvider" />.
-        /// </param>
         public PersonManager(
-            ILoggerProvider loggerProvider,
-            IPersonManagerSettingsProvider personManagerSettingsProvider)
+            IDataCaptureDatabaseAdapter dataCaptureDatabaseAdapter,
+            ILoggerProvider loggerProvider)
         {
+            this.dataCaptureDatabaseAdapter = dataCaptureDatabaseAdapter;
             this.loggerProvider = loggerProvider;
-
-            string dataCaptureDatabaseConnectionString =
-                personManagerSettingsProvider.DataCaptureDatabaseConnectionString;
-
-            this.dataCaptureDatabaseContract =
-                SprocStubFactory.Create<IDataCaptureDatabaseContract>(
-                    dataCaptureDatabaseConnectionString);
         }
 
         /// <inheritdoc />
@@ -48,7 +41,7 @@
                 $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.CreatePerson)}...");
 
             CreatedEntityReference createdEntityReference =
-                this.dataCaptureDatabaseContract.CreatePerson(
+                this.dataCaptureDatabaseAdapter.CreatePerson(
                     DateTime.UtcNow,
                     person.Enrolled,
                     person.FirstName,

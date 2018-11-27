@@ -43,10 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="PersonSchema.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.csproj" />
   </ItemGroup>
 

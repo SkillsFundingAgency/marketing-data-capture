@@ -1,12 +1,13 @@
 ﻿namespace SaatchiDataCapture.FunctionApp
 {
     using System;
-    using SaatchiDataCapture.Logic.Definitions;
+    using SaatchiDataCapture.Data.Definitions;
 
     /// <summary>
-    /// Implements <see cref="IPersonManagerSettingsProvider" />.
+    /// Implements <see cref="IDataCaptureDatabaseAdapterSettingsProvider" />.
     /// </summary>
-    public class PersonManagerSettingsProvider : IPersonManagerSettingsProvider
+    public class DataCaptureDatabaseAdapterSettingsProvider
+        : IDataCaptureDatabaseAdapterSettingsProvider
     {
         /// <inheritdoc />
         public string DataCaptureDatabaseConnectionString

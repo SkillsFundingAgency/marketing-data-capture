@@ -1,10 +1,10 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace SaatchiDataCapture.Data.Definitions
 {
     /// <summary>
-    /// Describes the operations of the <see cref="IPersonManager" /> settings
-    /// provider.
+    /// Describes the operations of the
+    /// <see cref="IDataCaptureDatabaseAdapter" /> settings provider.
     /// </summary>
-    public interface IPersonManagerSettingsProvider
+    public interface IDataCaptureDatabaseAdapterSettingsProvider
     {
         /// <summary>
         /// Gets the data capture database's connection string.

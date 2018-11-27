@@ -4,6 +4,40 @@
         <name>SaatchiDataCapture.Data</name>
     </assembly>
     <members>
+        <member name="T:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter">
+            <summary>
+            Implements <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" />.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.#ctor(SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider)">
+            <summary>
+            Initialises a new instance of the
+            <see cref="T:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter" /> class.
+            </summary>
+            <param name="dataCaptureDatabaseAdapterSettingsProvider">
+            An instance of type
+            <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider" />.
+            </param>
+        </member>
+        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter">
+            <summary>
+            Describes the operations of the data capture database adapter.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider">
+            <summary>
+            Describes the operations of the
+            <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" /> settings provider.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
+            <summary>
+            Gets the data capture database's connection string.
+            </summary>
+        </member>
         <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract">
             <summary>
             Describes the stored procedures exposed by the data capture database.

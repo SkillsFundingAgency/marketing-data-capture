@@ -46,32 +46,21 @@
             An instance of type <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" />.
             </returns>
         </member>
-        <member name="T:SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider">
-            <summary>
-            Describes the operations of the <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" /> settings
-            provider.
-            </summary>
-        </member>
-        <member name="P:SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider.DataCaptureDatabaseConnectionString">
-            <summary>
-            Gets the data capture database's connection string.
-            </summary>
-        </member>
         <member name="T:SaatchiDataCapture.Logic.PersonManager">
             <summary>
             Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" />.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.Logic.PersonManager.#ctor(SaatchiDataCapture.Logic.Definitions.ILoggerProvider,SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider)">
+        <member name="M:SaatchiDataCapture.Logic.PersonManager.#ctor(SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter,SaatchiDataCapture.Logic.Definitions.ILoggerProvider)">
             <summary>
             Initialises a new instance of the <see cref="T:SaatchiDataCapture.Logic.PersonManager" />
             class.
             </summary>
+            <param name="dataCaptureDatabaseAdapter">
+            An instance of type <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" />.
+            </param>
             <param name="loggerProvider">
             An instance of type <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
-            </param>
-            <param name="personManagerSettingsProvider">
-            An instance of type <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider" />.
             </param>
         </member>
         <member name="M:SaatchiDataCapture.Logic.PersonManager.Create(SaatchiDataCapture.Models.Person)">
@@ -82,13 +71,13 @@
             Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManagerFactory" />.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.Logic.PersonManagerFactory.#ctor(SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider)">
+        <member name="M:SaatchiDataCapture.Logic.PersonManagerFactory.#ctor(SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter)">
             <summary>
             Initialises a new instance of the
             <see cref="T:SaatchiDataCapture.Logic.PersonManagerFactory" /> class.
             </summary>
-            <param name="personManagerSettingsProvider">
-            An instance of type <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManagerSettingsProvider" />.
+            <param name="dataCaptureDatabaseAdapter">
+            An instance of type <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" />.
             </param>
         </member>
         <member name="M:SaatchiDataCapture.Logic.PersonManagerFactory.Create(SaatchiDataCapture.Logic.Definitions.ILoggerProvider)">
