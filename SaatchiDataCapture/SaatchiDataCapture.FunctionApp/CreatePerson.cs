@@ -8,6 +8,7 @@ namespace SaatchiDataCapture.FunctionApp
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
+    using SaatchiDataCapture.Logic;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
     using StructureMap;
@@ -47,14 +48,27 @@ namespace SaatchiDataCapture.FunctionApp
                 $"Invoking " +
                 $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)}...");
 
-            personManager.Create(person);
+            HttpStatusCode httpStatusCode;
+            try
+            {
+                personManager.Create(person);
 
-            traceWriter.Info(
-                $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)} " +
-                $"invoked with success.");
+                traceWriter.Info(
+                    $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)} " +
+                    $"invoked with success.");
 
-            // Return Created.
-            toReturn = new StatusCodeResult((int)HttpStatusCode.Created);
+                // Return Created.
+                httpStatusCode = HttpStatusCode.Created;
+            }
+            catch (PersonRecordExistsAlreadyException)
+            {
+                // Return conflicted.
+                httpStatusCode = HttpStatusCode.Conflict;
+            }
+
+            traceWriter.Info($"Returning {httpStatusCode}.");
+
+            toReturn = new StatusCodeResult((int)httpStatusCode);
 
             return toReturn;
         }

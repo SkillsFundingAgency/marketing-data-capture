@@ -83,5 +83,20 @@
         <member name="M:SaatchiDataCapture.Logic.PersonManagerFactory.Create(SaatchiDataCapture.Logic.Definitions.ILoggerProvider)">
             <inheritdoc />
         </member>
+        <member name="T:SaatchiDataCapture.Logic.PersonRecordExistsAlreadyException">
+            <summary>
+            Custom exception thrown upon attempting to insert a duplicate
+            <see cref="T:SaatchiDataCapture.Models.ContactDetail" /> instance, by email address.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.Logic.PersonRecordExistsAlreadyException.#ctor(System.String)">
+            <summary>
+            Initialises a new instance of the
+            <see cref="T:SaatchiDataCapture.Logic.PersonRecordExistsAlreadyException" /> class.
+            </summary>
+            <param name="emailAddress">
+            The email address causing the exception.
+            </param>
+        </member>
     </members>
 </doc>

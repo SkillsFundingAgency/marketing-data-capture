@@ -67,9 +67,7 @@
                 }
                 else
                 {
-                    // TODO: Throw a custom exception to translate above.
-                    //       Or return a model?
-                    //       i.e. CreateResult?
+                    throw new PersonRecordExistsAlreadyException(emailAddress);
                 }
             }
         }
