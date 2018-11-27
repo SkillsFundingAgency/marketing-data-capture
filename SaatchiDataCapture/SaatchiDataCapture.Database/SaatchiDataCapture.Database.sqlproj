@@ -73,5 +73,6 @@
     <Build Include="Stored Procedures\Create_Cookie.sql" />
     <Build Include="Stored Procedures\Create_ContactDetail.sql" />
     <Build Include="Stored Procedures\Create_Consent.sql" />
+    <Build Include="Stored Procedures\Read_ContactDetail.sql" />
   </ItemGroup>
 </Project>

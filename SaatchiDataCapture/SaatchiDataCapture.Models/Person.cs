@@ -8,6 +8,15 @@
     public class Person : ModelsBase
     {
         /// <summary>
+        /// Gets or sets an instance of <see cref="Models.ContactDetail" />.
+        /// </summary>
+        public ContactDetail ContactDetail
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the first name.
         /// </summary>
         public string FirstName

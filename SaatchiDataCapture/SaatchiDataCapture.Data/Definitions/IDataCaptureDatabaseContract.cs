@@ -25,13 +25,25 @@
         /// Provides the <c>@LastName</c> parameter.
         /// </param>
         /// <returns>
-        /// An instance of type <see cref="CreatedEntityReference" />.
+        /// An instance of type <see cref="CreatePersonResult" />.
         /// </returns>
         [InterSprocContractMethod(Name = "Create_Person")]
-        CreatedEntityReference CreatePerson(
+        CreatePersonResult CreatePerson(
             DateTime created,
             DateTime enrolled,
             string firstName,
             string lastName);
+
+        /// <summary>
+        /// Executes the <c>Read_ContactDetail</c> stored procedure.
+        /// </summary>
+        /// <param name="emailAddress">
+        /// Provides the <c>@EmailAddress</c> parameter.
+        /// </param>
+        /// <returns>
+        /// An instance of type <see cref="ReadContactDetailResult" />.
+        /// </returns>
+        [InterSprocContractMethod(Name = "Read_ContactDetail")]
+        ReadContactDetailResult ReadContactDetail(string emailAddress);
     }
 }

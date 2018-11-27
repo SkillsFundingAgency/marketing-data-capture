@@ -32,18 +32,28 @@
         }
 
         /// <inheritdoc />
-        public CreatedEntityReference CreatePerson(
+        public CreatePersonResult CreatePerson(
             DateTime created,
             DateTime enrolled,
             string firstName,
             string lastName)
         {
-            CreatedEntityReference toReturn =
+            CreatePersonResult toReturn =
                 this.dataCaptureDatabaseContract.CreatePerson(
                     created,
                     enrolled,
                     firstName,
                     lastName);
+
+            return toReturn;
+        }
+
+        /// <inheritdoc />
+        public ReadContactDetailResult ReadContactDetail(string emailAddress)
+        {
+            ReadContactDetailResult toReturn =
+                this.dataCaptureDatabaseContract.ReadContactDetail(
+                    emailAddress);
 
             return toReturn;
         }

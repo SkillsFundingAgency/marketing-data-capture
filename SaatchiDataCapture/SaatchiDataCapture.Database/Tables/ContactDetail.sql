@@ -11,5 +11,5 @@
 );
 
 GO
-CREATE CLUSTERED INDEX IX_ContactDetail_EmailAddress
+CREATE UNIQUE CLUSTERED INDEX IX_ContactDetail_EmailAddress
     ON ContactDetail (EmailAddress ASC);
