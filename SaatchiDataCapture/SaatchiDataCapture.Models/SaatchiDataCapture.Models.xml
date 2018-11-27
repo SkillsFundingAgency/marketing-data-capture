@@ -4,6 +4,58 @@
         <name>SaatchiDataCapture.Models</name>
     </assembly>
     <members>
+        <member name="T:SaatchiDataCapture.Models.Consent">
+            <summary>
+            Represents consent.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Consent.GdprConsentDeclared">
+            <summary>
+            Gets or sets when the consent (or lack of) was declared.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Consent.GdprConsentGiven">
+            <summary>
+            Gets or sets whether or not consent was given (or indeed, neither
+            given or denied if null).
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.Models.ContactDetail">
+            <summary>
+            Represents contact detail.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.ContactDetail.Captured">
+            <summary>
+            Gets or sets when the detail was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.ContactDetail.EmailAddress">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.ContactDetail.EmailVerificationCompletion">
+            <summary>
+            Gets or sets when the email address was verified.
+            If null, then the email address has not been verified.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.Models.Cookie">
+            <summary>
+            Represents a cookie.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Cookie.Captured">
+            <summary>
+            Gets or sets when the cookie was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Cookie.CookieIdentifier">
+            <summary>
+            Gets or sets the cookie's identifier.
+            </summary>
+        </member>
         <member name="T:SaatchiDataCapture.Models.ModelsBase">
             <summary>
             Abstract base class for all models in the
@@ -13,6 +65,32 @@
         <member name="T:SaatchiDataCapture.Models.Person">
             <summary>
             Represents a person.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.Consent">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.Models.Consent" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.Cookie">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.Models.Cookie" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.Route">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.Models.Route" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.ContactDetail">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.Models.ContactDetail" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Person.Enrolled">
+            <summary>
+            Gets or sets the <see cref="T:System.DateTime" /> in which the person was
+            enrolled.
             </summary>
         </member>
         <member name="P:SaatchiDataCapture.Models.Person.FirstName">
@@ -25,10 +103,19 @@
             Gets or sets the last name.
             </summary>
         </member>
-        <member name="P:SaatchiDataCapture.Models.Person.Enrolled">
+        <member name="T:SaatchiDataCapture.Models.Route">
             <summary>
-            Gets or sets the <see cref="T:System.DateTime" /> in which the person was
-            enrolled.
+            Represents a route.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Route.Captured">
+            <summary>
+            Gets or sets when the route was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Models.Route.RouteIdentifier">
+            <summary>
+            Gets or sets the route's identifier.
             </summary>
         </member>
     </members>

@@ -5,7 +5,7 @@
     /// <summary>
     /// Represents contact detail.
     /// </summary>
-    public class ContactDetail
+    public class ContactDetail : ModelsBase
     {
         /// <summary>
         /// Gets or sets when the detail was captured.

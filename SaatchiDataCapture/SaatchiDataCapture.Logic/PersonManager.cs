@@ -45,13 +45,25 @@
                 // Check for the ContactDetail instance first off.
                 string emailAddress = person.ContactDetail.EmailAddress;
 
+                this.loggerProvider.Info(
+                    $"Checking for existing ContactDetail record using " +
+                    $"email address \"{emailAddress}\"...");
+
                 ReadContactDetailResult readContactDetailResult =
                     this.dataCaptureDatabaseAdapter.ReadContactDetail(
                         emailAddress);
 
                 if (readContactDetailResult == null)
                 {
+                    this.loggerProvider.Info(
+                        $"\"{emailAddress}\" does not exist. Going ahead " +
+                        $"with insert of {person}.");
+
                     this.InsertPersonIntoDatabase(person);
+
+                    this.loggerProvider.Info(
+                        $"{person} was inserted into the database " +
+                        $"successfully.");
                 }
                 else
                 {
@@ -67,7 +79,7 @@
             // 1) Person
             this.loggerProvider.Info(
                 $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseContract)}.{nameof(IDataCaptureDatabaseContract.CreatePerson)}...");
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreatePerson)}...");
 
             CreatePersonResult createPersonResult =
                 this.dataCaptureDatabaseAdapter.CreatePerson(
@@ -79,9 +91,65 @@
             this.loggerProvider.Info(
                 $"Created: {createPersonResult}.");
 
+            long personId = createPersonResult.Id;
+
             // Now we have an id for Person, insert into the satellite tables.
             // 2) Consent
-            // TODO...
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
+
+            CreateConsentResult createConsentResult =
+                this.dataCaptureDatabaseAdapter.CreateConsent(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Consent.GdprConsentDeclared,
+                    person.Consent.GdprConsentGiven);
+
+            this.loggerProvider.Info($"Created: {createConsentResult}.");
+
+            // 3) Cookie
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
+
+            CreateCookieResult createCookieResult =
+                this.dataCaptureDatabaseAdapter.CreateCookie(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Cookie.Captured,
+                    person.Cookie.CookieIdentifier);
+
+            this.loggerProvider.Info($"Created: {createCookieResult}.");
+
+            // 4) Route
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
+
+            CreateRouteResult createRouteResult =
+                this.dataCaptureDatabaseAdapter.CreateRoute(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Route.Captured,
+                    person.Route.RouteIdentifier);
+
+            this.loggerProvider.Info($"Created: {createCookieResult}.");
+
+            // 5) ContactDetail
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateContactDetail)}...");
+
+            CreateContactDetailResult createContactDetailResult =
+                this.dataCaptureDatabaseAdapter.CreateContactDetail(
+                    personId,
+                    DateTime.UtcNow,
+                    person.ContactDetail.Captured,
+                    person.ContactDetail.EmailAddress,
+                    person.ContactDetail.EmailVerificationCompletion);
+
+            this.loggerProvider.Info($"Created: {createContactDetailResult}.");
         }
 
         private bool ModelIsValid(Person person)

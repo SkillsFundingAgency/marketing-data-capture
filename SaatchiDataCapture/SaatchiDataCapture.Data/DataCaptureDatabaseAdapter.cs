@@ -32,6 +32,59 @@
         }
 
         /// <inheritdoc />
+        public CreateConsentResult CreateConsent(
+            long person_Id,
+            DateTime created,
+            DateTime gdprConsentDeclared,
+            bool? gdprConsentGiven)
+        {
+            CreateConsentResult toReturn =
+                this.dataCaptureDatabaseContract.CreateConsent(
+                    person_Id,
+                    created,
+                    gdprConsentDeclared,
+                    gdprConsentGiven);
+
+            return toReturn;
+        }
+
+        /// <inheritdoc />
+        public CreateContactDetailResult CreateContactDetail(
+            long person_Id,
+            DateTime created,
+            DateTime captured,
+            string emailAddress,
+            DateTime? emailVerificationCompletion)
+        {
+            CreateContactDetailResult toReturn =
+                this.dataCaptureDatabaseContract.CreateContactDetail(
+                    person_Id,
+                    created,
+                    captured,
+                    emailAddress,
+                    emailVerificationCompletion);
+
+            return toReturn;
+        }
+
+        /// <inheritdoc />
+        public CreateCookieResult CreateCookie(
+            long person_Id,
+            DateTime created,
+            DateTime captured,
+            string cookieIdentifier)
+        {
+            CreateCookieResult toReturn =
+                this.dataCaptureDatabaseContract.CreateCookie(
+                    person_Id,
+                    created,
+                    captured,
+                    cookieIdentifier);
+
+            return toReturn;
+        }
+
+        /// <inheritdoc />
         public CreatePersonResult CreatePerson(
             DateTime created,
             DateTime enrolled,
@@ -49,7 +102,25 @@
         }
 
         /// <inheritdoc />
-        public ReadContactDetailResult ReadContactDetail(string emailAddress)
+        public CreateRouteResult CreateRoute(
+            long person_Id,
+            DateTime created,
+            DateTime captured,
+            string routeIdentifier)
+        {
+            CreateRouteResult toReturn =
+                this.dataCaptureDatabaseContract.CreateRoute(
+                    person_Id,
+                    created,
+                    captured,
+                    routeIdentifier);
+
+            return toReturn;
+        }
+
+        /// <inheritdoc />
+        public ReadContactDetailResult ReadContactDetail(
+            string emailAddress)
         {
             ReadContactDetailResult toReturn =
                 this.dataCaptureDatabaseContract.ReadContactDetail(
