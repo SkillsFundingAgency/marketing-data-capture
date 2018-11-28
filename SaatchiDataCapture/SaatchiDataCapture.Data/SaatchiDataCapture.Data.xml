@@ -42,27 +42,11 @@
             Describes the operations of the data capture database adapter.
             </summary>
         </member>
-        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider">
-            <summary>
-            Describes the operations of the
-            <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" /> settings provider.
-            </summary>
-        </member>
-        <member name="P:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
-            <summary>
-            Gets the data capture database's connection string.
-            </summary>
-        </member>
-        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract">
-            <summary>
-            Describes the stored procedures exposed by the data capture database.
-            </summary>
-        </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateConsent(System.Int64,System.DateTime,System.DateTime,System.Nullable{System.Boolean})">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateConsent(System.Int64,System.DateTime,System.DateTime,System.Nullable{System.Boolean})">
             <summary>
             Executes the <c>Create_Consent</c> stored procedure.
             </summary>
-            <param name="person_Id">
+            <param name="personId">
             Provides the <c>@Person_Id</c> parameter.
             </param>
             <param name="created">
@@ -78,11 +62,11 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreateConsentResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateContactDetail(System.Int64,System.DateTime,System.DateTime,System.String,System.Nullable{System.DateTime})">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateContactDetail(System.Int64,System.DateTime,System.DateTime,System.String,System.Nullable{System.DateTime})">
             <summary>
             Executes the <c>Create_ContactDetail</c> stored procedure.
             </summary>
-            <param name="person_Id">
+            <param name="personId">
             Provides the <c>@Person_Id</c> parameter.
             </param>
             <param name="created">
@@ -101,11 +85,11 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreateContactDetailResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateCookie(System.Int64,System.DateTime,System.DateTime,System.String)">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateCookie(System.Int64,System.DateTime,System.DateTime,System.String)">
             <summary>
             Executes the <c>Create_Cookie</c> stored procedure.
             </summary>
-            <param name="person_Id">
+            <param name="personId">
             Provides the <c>@Person_Id</c> parameter.
             </param>
             <param name="created">
@@ -121,7 +105,7 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreateCookieResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)">
             <summary>
             Executes the <c>Create_Person</c> stored procedure.
             </summary>
@@ -141,11 +125,11 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreatePersonResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)">
             <summary>
             Executes the <c>Create_Route</c> stored procedure.
             </summary>
-            <param name="person_Id">
+            <param name="personId">
             Provides the <c>@Person_Id</c> parameter.
             </param>
             <param name="created">
@@ -161,7 +145,7 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreateRouteResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.ReadContactDetail(System.String)">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadContactDetail(System.String)">
             <summary>
             Executes the <c>Read_ContactDetail</c> stored procedure.
             </summary>
@@ -172,38 +156,49 @@
             An instance of type <see cref="T:SaatchiDataCapture.Data.Models.ReadContactDetailResult" />.
             </returns>
         </member>
+        <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider">
+            <summary>
+            Describes the operations of the
+            <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter" /> settings provider.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
+            <summary>
+            Gets the data capture database's connection string.
+            </summary>
+        </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateConsentResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateConsent(System.Int64,System.DateTime,System.DateTime,System.Nullable{System.Boolean})" />
+            <see cref="!:IDataCaptureDatabaseContract.CreateConsent(long, System.DateTime, System.DateTime, bool?)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateContactDetailResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateContactDetail(System.Int64,System.DateTime,System.DateTime,System.String,System.Nullable{System.DateTime})" />
+            <see cref="!:IDataCaptureDatabaseContract.CreateContactDetail(long, DateTime, DateTime, string, DateTime?)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateCookieResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateCookie(System.Int64,System.DateTime,System.DateTime,System.String)" />
+            <see cref="!:IDataCaptureDatabaseContract.CreateCookie(long, System.DateTime, System.DateTime, string)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreatePersonResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)" />
+            <see cref="!:IDataCaptureDatabaseContract.CreatePerson(DateTime, DateTime, string, string)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateRouteResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)" />
+            <see cref="!:IDataCaptureDatabaseContract.CreateRoute(long, DateTime, DateTime, string)" />
             method.
             </summary>
         </member>
@@ -221,7 +216,7 @@
         <member name="T:SaatchiDataCapture.Data.Models.ReadContactDetailResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.ReadContactDetail(System.String)" />
+            <see cref="!:IDataCaptureDatabaseContract.ReadContactDetail(string)" />
             method.
             </summary>
         </member>

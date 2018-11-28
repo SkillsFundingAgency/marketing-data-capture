@@ -5,7 +5,7 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.CreateRoute(long, DateTime, DateTime, string)" />
+    /// <see cref="IDataCaptureDatabaseAdapter.CreateRoute(long, DateTime, DateTime, string)" />
     /// method.
     /// </summary>
     public class CreateRouteResult : ModelsBase

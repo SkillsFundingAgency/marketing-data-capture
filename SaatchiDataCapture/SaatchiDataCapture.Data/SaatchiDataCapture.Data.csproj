@@ -7,7 +7,7 @@
   <ItemGroup>
 
     <!-- Other -->
-    <PackageReference Include="Meridian.InterSproc" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
     
 

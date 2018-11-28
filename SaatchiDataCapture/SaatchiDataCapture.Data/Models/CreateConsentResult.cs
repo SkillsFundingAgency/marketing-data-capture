@@ -4,7 +4,7 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.CreateConsent(long, System.DateTime, System.DateTime, bool?)" />
+    /// <see cref="IDataCaptureDatabaseAdapter.CreateConsent(long, System.DateTime, System.DateTime, bool?)" />
     /// method.
     /// </summary>
     public class CreateConsentResult : ModelsBase

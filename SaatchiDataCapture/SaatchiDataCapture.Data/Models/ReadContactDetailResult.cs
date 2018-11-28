@@ -4,7 +4,7 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.ReadContactDetail(string)" />
+    /// <see cref="IDataCaptureDatabaseAdapter.ReadContactDetail(string)" />
     /// method.
     /// </summary>
     public class ReadContactDetailResult : ModelsBase

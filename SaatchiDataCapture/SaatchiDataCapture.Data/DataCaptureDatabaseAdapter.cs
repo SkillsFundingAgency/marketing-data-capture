@@ -1,7 +1,11 @@
 ﻿namespace SaatchiDataCapture.Data
 {
     using System;
-    using Meridian.InterSproc;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using Dapper;
     using SaatchiDataCapture.Data.Definitions;
     using SaatchiDataCapture.Data.Models;
 
@@ -10,7 +14,7 @@
     /// </summary>
     public class DataCaptureDatabaseAdapter : IDataCaptureDatabaseAdapter
     {
-        private readonly IDataCaptureDatabaseContract dataCaptureDatabaseContract;
+        private readonly string dataCaptureDatabaseConnectionString;
 
         /// <summary>
         /// Initialises a new instance of the
@@ -23,63 +27,86 @@
         public DataCaptureDatabaseAdapter(
             IDataCaptureDatabaseAdapterSettingsProvider dataCaptureDatabaseAdapterSettingsProvider)
         {
-            string dataCaptureDatabaseConnectionString =
+            this.dataCaptureDatabaseConnectionString =
                 dataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString;
-
-            this.dataCaptureDatabaseContract =
-                SprocStubFactory.Create<IDataCaptureDatabaseContract>(
-                    dataCaptureDatabaseConnectionString);
         }
 
         /// <inheritdoc />
         public CreateConsentResult CreateConsent(
-            long person_Id,
+            long personId,
             DateTime created,
             DateTime gdprConsentDeclared,
             bool? gdprConsentGiven)
         {
-            CreateConsentResult toReturn =
-                this.dataCaptureDatabaseContract.CreateConsent(
-                    person_Id,
-                    created,
-                    gdprConsentDeclared,
-                    gdprConsentGiven);
+            CreateConsentResult toReturn = null;
+
+            object sprocParameters =
+                new
+                {
+                    Person_Id = personId,
+                    Created = created,
+                    GDPRConsentDeclared = gdprConsentDeclared,
+                    GDPRConsentGiven = gdprConsentGiven,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<CreateConsentResult>(
+                    "Create_Consent",
+                    sprocParameters);
 
             return toReturn;
         }
 
         /// <inheritdoc />
         public CreateContactDetailResult CreateContactDetail(
-            long person_Id,
+            long personId,
             DateTime created,
             DateTime captured,
             string emailAddress,
             DateTime? emailVerificationCompletion)
         {
-            CreateContactDetailResult toReturn =
-                this.dataCaptureDatabaseContract.CreateContactDetail(
-                    person_Id,
-                    created,
-                    captured,
-                    emailAddress,
-                    emailVerificationCompletion);
+            CreateContactDetailResult toReturn = null;
+
+            object sprocParameters =
+                new
+                {
+                    Person_Id = personId,
+                    Created = created,
+                    Captured = captured,
+                    EmailAddress = emailAddress,
+                    EmailVerificationCompletion = emailVerificationCompletion,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<CreateContactDetailResult>(
+                    "Create_ContactDetail",
+                    sprocParameters);
 
             return toReturn;
         }
 
         /// <inheritdoc />
         public CreateCookieResult CreateCookie(
-            long person_Id,
+            long personId,
             DateTime created,
             DateTime captured,
             string cookieIdentifier)
         {
-            CreateCookieResult toReturn =
-                this.dataCaptureDatabaseContract.CreateCookie(
-                    person_Id,
-                    created,
-                    captured,
-                    cookieIdentifier);
+            CreateCookieResult toReturn = null;
+
+            object sprocParameters =
+                new
+                {
+                    Person_Id = personId,
+                    Created = created,
+                    Captured = captured,
+                    CookieIdentifier = cookieIdentifier,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<CreateCookieResult>(
+                    "Create_Cookie",
+                    sprocParameters);
 
             return toReturn;
         }
@@ -91,12 +118,21 @@
             string firstName,
             string lastName)
         {
-            CreatePersonResult toReturn =
-                this.dataCaptureDatabaseContract.CreatePerson(
-                    created,
-                    enrolled,
-                    firstName,
-                    lastName);
+            CreatePersonResult toReturn = null;
+
+            object sprocParameters =
+                new
+                {
+                    Created = created,
+                    Enrolled = enrolled,
+                    FirstName = firstName,
+                    LastName = lastName,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<CreatePersonResult>(
+                    "Create_Person",
+                    sprocParameters);
 
             return toReturn;
         }
@@ -108,12 +144,7 @@
             DateTime captured,
             string routeIdentifier)
         {
-            CreateRouteResult toReturn =
-                this.dataCaptureDatabaseContract.CreateRoute(
-                    person_Id,
-                    created,
-                    captured,
-                    routeIdentifier);
+            CreateRouteResult toReturn = null;
 
             return toReturn;
         }
@@ -122,9 +153,41 @@
         public ReadContactDetailResult ReadContactDetail(
             string emailAddress)
         {
-            ReadContactDetailResult toReturn =
-                this.dataCaptureDatabaseContract.ReadContactDetail(
-                    emailAddress);
+            ReadContactDetailResult toReturn = null;
+
+            object sprocParameters =
+                new
+                {
+                    EmailAddress = emailAddress,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<ReadContactDetailResult>(
+                    "Read_ContactDetail",
+                    sprocParameters);
+
+            return toReturn;
+        }
+
+        private TResultType ExecuteStoredProcedureSingularResult<TResultType>(
+            string storedProcedureName,
+            object parameters)
+            where TResultType : ModelsBase
+        {
+            TResultType toReturn = null;
+
+            using (IDbConnection sqlConnection = new SqlConnection(this.dataCaptureDatabaseConnectionString))
+            {
+                sqlConnection.Open();
+
+                IEnumerable<TResultType> results =
+                    sqlConnection.Query<TResultType>(
+                        storedProcedureName,
+                        parameters,
+                        commandType: CommandType.StoredProcedure);
+
+                toReturn = results.SingleOrDefault();
+            }
 
             return toReturn;
         }

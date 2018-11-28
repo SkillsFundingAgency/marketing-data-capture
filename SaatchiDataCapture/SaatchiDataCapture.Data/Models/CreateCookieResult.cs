@@ -4,7 +4,7 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.CreateCookie(long, System.DateTime, System.DateTime, string)" />
+    /// <see cref="IDataCaptureDatabaseAdapter.CreateCookie(long, System.DateTime, System.DateTime, string)" />
     /// method.
     /// </summary>
     public class CreateCookieResult : ModelsBase

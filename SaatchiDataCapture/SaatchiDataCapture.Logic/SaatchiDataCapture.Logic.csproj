@@ -7,7 +7,6 @@
   <ItemGroup>
     
     <!-- Other -->
-    <PackageReference Include="Meridian.InterSproc" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
 
     <!-- Development/Non-Runtime -->

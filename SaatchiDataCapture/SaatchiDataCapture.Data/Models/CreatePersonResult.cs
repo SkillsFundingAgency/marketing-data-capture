@@ -5,7 +5,7 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.CreatePerson(DateTime, DateTime, string, string)" />
+    /// <see cref="IDataCaptureDatabaseAdapter.CreatePerson(DateTime, DateTime, string, string)" />
     /// method.
     /// </summary>
     public class CreatePersonResult : ModelsBase
