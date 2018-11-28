@@ -1,10 +1,11 @@
 ﻿namespace SaatchiDataCapture.Data.Models
 {
+    using System;
     using SaatchiDataCapture.Data.Definitions;
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseContract.CreateContactDetail(System.DateTime, System.DateTime, string, System.DateTime?)" />
+    /// <see cref="IDataCaptureDatabaseContract.CreateContactDetail(long, DateTime, DateTime, string, DateTime?)" />
     /// method.
     /// </summary>
     public class CreateContactDetailResult : ModelsBase

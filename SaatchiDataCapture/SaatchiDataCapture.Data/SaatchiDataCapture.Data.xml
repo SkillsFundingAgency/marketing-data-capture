@@ -182,7 +182,7 @@
         <member name="T:SaatchiDataCapture.Data.Models.CreateContactDetailResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateContactDetail(System.DateTime, System.DateTime, string, System.DateTime?)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateContactDetail(System.Int64,System.DateTime,System.DateTime,System.String,System.Nullable{System.DateTime})" />
             method.
             </summary>
         </member>
@@ -203,7 +203,7 @@
         <member name="T:SaatchiDataCapture.Data.Models.CreateRouteResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateRoute(System.DateTime, System.DateTime, string)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseContract.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)" />
             method.
             </summary>
         </member>
