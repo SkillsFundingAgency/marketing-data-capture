@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp
+﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
 {
     using System;
     using SaatchiDataCapture.Data.Definitions;

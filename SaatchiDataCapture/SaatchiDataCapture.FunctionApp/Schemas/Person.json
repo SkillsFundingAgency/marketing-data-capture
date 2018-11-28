@@ -1,0 +1,81 @@
+﻿{
+  "type": "object",
+  "required": [
+    "consent",
+    "cookie",
+    "route",
+    "contactDetail",
+    "enrolled",
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "consent": {
+      "type": "object",
+      "required": [
+        "gdprConsentDeclared"
+      ],
+      "properties": {
+        "gdprConsentDeclared": {
+          "type": "string"
+        },
+        "gdprConsentGiven": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cookie": {
+      "type": "object",
+      "required": [
+        "captured",
+        "cookieIdentifier"
+      ],
+      "properties": {
+        "captured": {
+          "type": "string"
+        },
+        "cookieIdentifier": {
+          "type": "string"
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "properties": {
+        "captured": {
+          "type": "string"
+        },
+        "routeIdentifier": {
+          "type": "string"
+        }
+      }
+    },
+    "contactDetail": {
+      "type": "object",
+      "required": [
+        "captured",
+        "emailAddress"
+      ],
+      "properties": {
+        "captured": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "emailVerificationCompletion": {
+          "type": "string"
+        }
+      }
+    },
+    "enrolled": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    }
+  }
+}

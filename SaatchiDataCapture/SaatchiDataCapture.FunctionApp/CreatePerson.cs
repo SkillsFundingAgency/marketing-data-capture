@@ -8,6 +8,7 @@ namespace SaatchiDataCapture.FunctionApp
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
+    using SaatchiDataCapture.FunctionApp.Infrastructure;
     using SaatchiDataCapture.Logic;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;

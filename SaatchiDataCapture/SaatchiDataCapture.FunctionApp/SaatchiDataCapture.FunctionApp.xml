@@ -23,29 +23,29 @@
             An instance of type <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
             </returns>
         </member>
-        <member name="T:SaatchiDataCapture.FunctionApp.DataCaptureDatabaseAdapterSettingsProvider">
+        <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.DataCaptureDatabaseAdapterSettingsProvider">
             <summary>
             Implements <see cref="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider" />.
             </summary>
         </member>
-        <member name="P:SaatchiDataCapture.FunctionApp.DataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
+        <member name="P:SaatchiDataCapture.FunctionApp.Infrastructure.DataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
             <inheritdoc />
         </member>
-        <member name="T:SaatchiDataCapture.FunctionApp.LoggerProvider">
+        <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider">
             <summary>
             Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.LoggerProvider.#ctor(Microsoft.Azure.WebJobs.Host.TraceWriter)">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.#ctor(Microsoft.Azure.WebJobs.Host.TraceWriter)">
             <summary>
-            Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.LoggerProvider" />
+            Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider" />
             class.
             </summary>
             <param name="traceWriter">
             An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
             </param>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.LoggerProvider.Info(System.String)">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Info(System.String)">
             <inheritdoc />
         </member>
         <member name="T:SaatchiDataCapture.FunctionApp.Registry">
@@ -58,6 +58,25 @@
             <summary>
             Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Registry" /> class.
             </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.UpdatePerson">
+            <summary>
+            Entry class for the <c>update-person</c> function.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.UpdatePerson.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter)">
+            <summary>
+            Entry method for the <c>update-person</c> function.
+            </summary>
+            <param name="httpRequest">
+            An instance of <see cref="T:Microsoft.AspNetCore.Http.HttpContext" />.
+            </param>
+            <param name="traceWriter">
+            An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
+            </param>
+            <returns>
+            An instance of type <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
+            </returns>
         </member>
     </members>
 </doc>
