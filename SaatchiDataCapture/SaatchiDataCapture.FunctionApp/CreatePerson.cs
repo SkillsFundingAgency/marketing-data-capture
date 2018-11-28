@@ -1,5 +1,6 @@
 namespace SaatchiDataCapture.FunctionApp
 {
+    using System;
     using System.IO;
     using System.Net;
     using Microsoft.AspNetCore.Http;
@@ -39,6 +40,33 @@ namespace SaatchiDataCapture.FunctionApp
         {
             IActionResult toReturn = null;
 
+            HttpStatusCode httpStatusCode;
+            try
+            {
+                httpStatusCode = Execute(httpRequest, traceWriter);
+            }
+            catch (Exception exception)
+            {
+                traceWriter.Error(
+                    "An unhandled exception was thrown.",
+                    exception);
+
+                httpStatusCode = HttpStatusCode.InternalServerError;
+            }
+
+            toReturn = new StatusCodeResult((int)httpStatusCode);
+
+            traceWriter.Info($"Returning {httpStatusCode}.");
+
+            return toReturn;
+        }
+
+        private static HttpStatusCode Execute(
+            HttpRequest httpRequest,
+            TraceWriter traceWriter)
+        {
+            HttpStatusCode toReturn;
+
             // Get our entry point in the logic layer and...
             IPersonManager personManager =
                 GetIPersonManagerInstance(traceWriter);
@@ -49,7 +77,6 @@ namespace SaatchiDataCapture.FunctionApp
                 $"Invoking " +
                 $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)}...");
 
-            HttpStatusCode httpStatusCode;
             try
             {
                 personManager.Create(person);
@@ -59,17 +86,13 @@ namespace SaatchiDataCapture.FunctionApp
                     $"invoked with success.");
 
                 // Return Created.
-                httpStatusCode = HttpStatusCode.Created;
+                toReturn = HttpStatusCode.Created;
             }
             catch (PersonRecordExistsAlreadyException)
             {
                 // Return conflicted.
-                httpStatusCode = HttpStatusCode.Conflict;
+                toReturn = HttpStatusCode.Conflict;
             }
-
-            traceWriter.Info($"Returning {httpStatusCode}.");
-
-            toReturn = new StatusCodeResult((int)httpStatusCode);
 
             return toReturn;
         }
@@ -99,15 +122,48 @@ namespace SaatchiDataCapture.FunctionApp
             return toReturn;
         }
 
+        private static string GetAssemblyDirectory(TraceWriter traceWriter)
+        {
+            string toReturn = null;
+
+            // For some strange reason, when deployed on Azure, the below
+            // will be a path to a directory, not the location of the file.
+            // Locally, this translates to a file.
+            // Thus the craziness below.
+            string assemblyLocation = typeof(CreatePerson).Assembly.Location;
+
+            FileAttributes attr = File.GetAttributes(assemblyLocation);
+
+            DirectoryInfo executionDirectory = null;
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                executionDirectory = new DirectoryInfo(assemblyLocation);
+            }
+            else
+            {
+                FileInfo fileInfo = new FileInfo(assemblyLocation);
+
+                executionDirectory = fileInfo.Directory;
+            }
+
+            toReturn = executionDirectory.FullName;
+
+            traceWriter.Info($"Execution location: {toReturn}.");
+
+            return toReturn;
+        }
+
         private static IPersonManager GetIPersonManagerInstance(
             TraceWriter traceWriter)
         {
             IPersonManager toReturn = null;
 
+            string path = GetAssemblyDirectory(traceWriter);
+
             traceWriter.Info(
                 $"Pulling back an instance of {nameof(IPersonManager)}...");
 
-            Registry registry = new Registry();
+            Registry registry = new Registry(path);
             Container container = new Container(registry);
 
             IPersonManagerFactory personManagerFactory =

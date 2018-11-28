@@ -1,5 +1,7 @@
 ﻿namespace SaatchiDataCapture.Logic.Definitions
 {
+    using System;
+
     /// <summary>
     /// Describes the operations of the logger provider.
     /// </summary>

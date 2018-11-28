@@ -54,10 +54,13 @@
             <see cref="T:StructureMap.Registry" />.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.Registry.#ctor">
+        <member name="M:SaatchiDataCapture.FunctionApp.Registry.#ctor(System.String)">
             <summary>
             Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Registry" /> class.
             </summary>
+            <param name="executingAssemblyLocation">
+            The location of the executing assembly (i.e. the bin directory).
+            </param>
         </member>
         <member name="T:SaatchiDataCapture.FunctionApp.UpdatePerson">
             <summary>

@@ -1,5 +1,6 @@
 ﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
 {
+    using System;
     using Microsoft.Azure.WebJobs.Host;
     using SaatchiDataCapture.Logic.Definitions;
 
