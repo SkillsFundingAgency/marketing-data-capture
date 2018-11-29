@@ -132,6 +132,7 @@
 
             traceWriter.Info($"Performing validation of {requestBody}...");
 
+            // TODO: We need to validate the models within this as well.
             toReturn = Validator.TryValidateObject(
                 requestBody,
                 validationContext,

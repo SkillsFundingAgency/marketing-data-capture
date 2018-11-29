@@ -1,14 +1,14 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody
 {
     using System;
 
     /// <summary>
-    /// Represents a cookie.
+    /// Represents a route.
     /// </summary>
-    public class Cookie : ModelsBase
+    public class Route : ModelsBase
     {
         /// <summary>
-        /// Gets or sets when the cookie was captured.
+        /// Gets or sets when the route was captured.
         /// </summary>
         public DateTime Captured
         {
@@ -17,9 +17,9 @@
         }
 
         /// <summary>
-        /// Gets or sets the cookie's identifier.
+        /// Gets or sets the route's identifier.
         /// </summary>
-        public string CookieIdentifier
+        public string RouteIdentifier
         {
             get;
             set;

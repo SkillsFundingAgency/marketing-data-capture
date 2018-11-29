@@ -1,6 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePersonBody
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents a route.
@@ -10,6 +11,7 @@
         /// <summary>
         /// Gets or sets when the route was captured.
         /// </summary>
+        [Required]
         public DateTime Captured
         {
             get;
@@ -19,6 +21,7 @@
         /// <summary>
         /// Gets or sets the route's identifier.
         /// </summary>
+        [Required]
         public string RouteIdentifier
         {
             get;

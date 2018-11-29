@@ -1,6 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePersonBody
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents a cookie.
@@ -10,6 +11,7 @@
         /// <summary>
         /// Gets or sets when the cookie was captured.
         /// </summary>
+        [Required]
         public DateTime Captured
         {
             get;
@@ -19,6 +21,7 @@
         /// <summary>
         /// Gets or sets the cookie's identifier.
         /// </summary>
+        [Required]
         public string CookieIdentifier
         {
             get;

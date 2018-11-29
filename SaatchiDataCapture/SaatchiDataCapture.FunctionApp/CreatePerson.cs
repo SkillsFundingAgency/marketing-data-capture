@@ -34,7 +34,7 @@ namespace SaatchiDataCapture.FunctionApp
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute<Models.CreatePerson.Person>(
+            IActionResult toReturn = FunctionLogicHarness.Execute<Models.CreatePersonBody.Person>(
                 httpRequest,
                 traceWriter,
                 (personManager, person) =>
@@ -53,7 +53,7 @@ namespace SaatchiDataCapture.FunctionApp
         private static HttpStatusCode PerformCreatePerson(
             TraceWriter traceWriter,
             IPersonManager personManager,
-            Models.CreatePerson.Person createPerson)
+            Models.CreatePersonBody.Person createPerson)
         {
             HttpStatusCode toReturn;
 

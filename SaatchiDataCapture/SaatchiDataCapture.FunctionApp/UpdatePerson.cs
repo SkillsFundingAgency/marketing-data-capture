@@ -34,7 +34,7 @@
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute<Models.UpdatePerson.Person>(
+            IActionResult toReturn = FunctionLogicHarness.Execute<Models.UpdatePersonBody.Person>(
                 httpRequest,
                 traceWriter,
                 (personManager, person) =>
@@ -53,7 +53,7 @@
         private static HttpStatusCode PerformUpdatePerson(
             TraceWriter traceWriter,
             IPersonManager personManager,
-            Models.UpdatePerson.Person updatePerson)
+            Models.UpdatePersonBody.Person updatePerson)
         {
             HttpStatusCode toReturn;
 

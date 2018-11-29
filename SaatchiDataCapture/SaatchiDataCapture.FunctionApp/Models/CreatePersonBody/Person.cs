@@ -1,6 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePersonBody
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents a person.
@@ -8,8 +9,9 @@
     public class Person : ModelsBase
     {
         /// <summary>
-        /// Gets or sets an instance of <see cref="UpdatePerson.Consent" />.
+        /// Gets or sets an instance of <see cref="CreatePersonBody.Consent" />.
         /// </summary>
+        [Required]
         public Consent Consent
         {
             get;
@@ -17,8 +19,9 @@
         }
 
         /// <summary>
-        /// Gets or sets an instance of <see cref="UpdatePerson.Cookie" />.
+        /// Gets or sets an instance of <see cref="CreatePersonBody.Cookie" />.
         /// </summary>
+        [Required]
         public Cookie Cookie
         {
             get;
@@ -26,8 +29,9 @@
         }
 
         /// <summary>
-        /// Gets or sets an instance of <see cref="UpdatePerson.Route" />.
+        /// Gets or sets an instance of <see cref="CreatePersonBody.Route" />.
         /// </summary>
+        [Required]
         public Route Route
         {
             get;
@@ -36,9 +40,21 @@
 
         /// <summary>
         /// Gets or sets an instance of
-        /// <see cref="UpdatePerson.ContactDetail" />.
+        /// <see cref="CreatePersonBody.ContactDetail" />.
         /// </summary>
+        [Required]
         public ContactDetail ContactDetail
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DateTime" /> in which the person was
+        /// enrolled.
+        /// </summary>
+        [Required]
+        public DateTime Enrolled
         {
             get;
             set;
@@ -47,6 +63,7 @@
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
+        [Required]
         public string FirstName
         {
             get;
@@ -56,6 +73,7 @@
         /// <summary>
         /// Gets or sets the last name.
         /// </summary>
+        [Required]
         public string LastName
         {
             get;

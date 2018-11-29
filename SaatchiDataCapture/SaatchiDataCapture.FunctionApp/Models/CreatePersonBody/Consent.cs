@@ -1,6 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePersonBody
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents consent.
@@ -10,6 +11,7 @@
         /// <summary>
         /// Gets or sets when the consent (or lack of) was declared.
         /// </summary>
+        [Required]
         public DateTime GdprConsentDeclared
         {
             get;

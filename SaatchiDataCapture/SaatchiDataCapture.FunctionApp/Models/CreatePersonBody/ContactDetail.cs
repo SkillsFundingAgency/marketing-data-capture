@@ -1,6 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePersonBody
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents contact detail.
@@ -10,6 +11,7 @@
         /// <summary>
         /// Gets or sets when the detail was captured.
         /// </summary>
+        [Required]
         public DateTime Captured
         {
             get;
@@ -19,6 +21,7 @@
         /// <summary>
         /// Gets or sets the email address.
         /// </summary>
+        [Required]
         public string EmailAddress
         {
             get;

@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePerson
+﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody
 {
     using System;
 
