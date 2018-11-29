@@ -69,5 +69,6 @@
     "lastName": {
       "type": "string"
     }
-  }
+  },
+  "example": "{\n  \"consent\": {\n    \"gdprConsentDeclared\": \"2018-11-19 08:30:21\",\n    \"gdprConsentGiven\": true\n  },\n  \"cookie\": {\n    \"captured\": \"2018-11-19 08:31:11\",\n    \"cookieIdentifier\": \"ABC0123456789\"\n  },\n  \"route\": {\n    \"captured\": \"2018-11-19 08:29:03\",\n    \"routeIdentifier\": \"ZYX9876543210\"\n  },\n  \"contactDetail\": {\n    \"captured\": \"2018-11-18 08:30:21\",\n    \"emailAddress\": \"joe.bloggs@somecorp.local\",\n    \"emailVerificationCompletion\": \"2018-11-18 13:00:23\"\n  },\n  \"enrolled\": \"2018-11-18 08:30:20\",\n  \"firstName\": \"Joe\",\n  \"lastName\": \"Bloggs\"\n}"
 }
