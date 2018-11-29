@@ -134,15 +134,15 @@
             string routeIdentifier);
 
         /// <summary>
-        /// Executes the <c>Read_ContactDetail</c> stored procedure.
+        /// Executes the <c>Read_Person</c> stored procedure.
         /// </summary>
         /// <param name="emailAddress">
         /// Provides the <c>@EmailAddress</c> parameter.
         /// </param>
         /// <returns>
-        /// An instance of type <see cref="ReadContactDetailResult" />.
+        /// An instance of type <see cref="ReadPersonResult" />.
         /// </returns>
-        ReadContactDetailResult ReadContactDetail(
+        ReadPersonResult ReadPerson(
             string emailAddress);
     }
 }

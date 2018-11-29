@@ -36,30 +36,26 @@
         public void Create(Person person)
         {
             // TODO: Validate the Person instance.
+            // TODO: Is this the right place for this?
             bool personIsValid = this.ModelIsValid(person);
 
             if (personIsValid)
             {
-                // As this is a create request, we can only create the record
-                // if the email address does not exist currently.
-                // Check for the ContactDetail instance first off.
                 string emailAddress = person.ContactDetail.EmailAddress;
 
-                this.loggerProvider.Info(
-                    $"Checking for existing ContactDetail record using " +
-                    $"email address \"{emailAddress}\"...");
+                // As this is a create request, we can only create the record
+                // if the email address does not exist currently.
+                // Check for the Person instance first off.
+                ReadPersonResult readPersonResult =
+                    this.GetContactDetailByEmail(emailAddress);
 
-                ReadContactDetailResult readContactDetailResult =
-                    this.dataCaptureDatabaseAdapter.ReadContactDetail(
-                        emailAddress);
-
-                if (readContactDetailResult == null)
+                if (readPersonResult == null)
                 {
                     this.loggerProvider.Info(
                         $"\"{emailAddress}\" does not exist. Going ahead " +
                         $"with insert of {person}.");
 
-                    this.InsertPersonIntoDatabase(person);
+                    this.InsertRecordsIntoDatabase(person);
 
                     this.loggerProvider.Info(
                         $"{person} was inserted into the database " +
@@ -72,7 +68,58 @@
             }
         }
 
-        private void InsertPersonIntoDatabase(Person person)
+        /// <inheritdoc />
+        public void Update(Person person)
+        {
+            bool personIsValid = this.ModelIsValid(person);
+
+            if (personIsValid)
+            {
+                // As this is an update request, we can only update the record
+                // if the email address exists currently.
+                // Check for the Person instance first off.
+                string emailAddress = person.ContactDetail.EmailAddress;
+
+                ReadPersonResult readPersonResult =
+                    this.GetContactDetailByEmail(emailAddress);
+
+                if (readPersonResult != null)
+                {
+                    this.loggerProvider.Info(
+                        $"\"{emailAddress}\" exists. Going ahead with " +
+                        $"update of {person}.");
+
+                    this.UpdatePersonInDatabase(
+                        person,
+                        readPersonResult);
+
+                    this.loggerProvider.Info(
+                        $"{person} was updated successfully.");
+                }
+                else
+                {
+                    throw new PersonRecordDoesNotExistException(
+                        emailAddress);
+                }
+            }
+        }
+
+        private ReadPersonResult GetContactDetailByEmail(
+            string emailAddress)
+        {
+            ReadPersonResult toReturn = null;
+
+            this.loggerProvider.Info(
+                $"Checking for existing ContactDetail record using " +
+                $"email address \"{emailAddress}\"...");
+
+            toReturn = this.dataCaptureDatabaseAdapter.ReadPerson(
+                emailAddress);
+
+            return toReturn;
+        }
+
+        private void InsertRecordsIntoDatabase(Person person)
         {
             // 1) Person
             this.loggerProvider.Info(
@@ -148,6 +195,13 @@
                     person.ContactDetail.EmailVerificationCompletion);
 
             this.loggerProvider.Info($"Created: {createContactDetailResult}.");
+        }
+
+        private void UpdatePersonInDatabase(
+            Person person,
+            ReadPersonResult readContactDetailResult)
+        {
+            // TODO: Do the do.
         }
 
         private bool ModelIsValid(Person person)

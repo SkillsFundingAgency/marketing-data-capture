@@ -4,10 +4,9 @@
 
     /// <summary>
     /// Represents the return type for the
-    /// <see cref="IDataCaptureDatabaseAdapter.ReadContactDetail(string)" />
-    /// method.
+    /// <see cref="IDataCaptureDatabaseAdapter.ReadPerson(string)" /> method.
     /// </summary>
-    public class ReadContactDetailResult : ModelsBase
+    public class ReadPersonResult : ModelsBase
     {
         // Nothing - just inherits from the base.
     }

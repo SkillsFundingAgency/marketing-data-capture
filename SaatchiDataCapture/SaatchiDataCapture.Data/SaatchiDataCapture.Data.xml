@@ -34,7 +34,7 @@
         <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.ReadContactDetail(System.String)">
+        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.ReadPerson(System.String)">
             <inheritdoc />
         </member>
         <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter">
@@ -145,15 +145,15 @@
             An instance of <see cref="T:SaatchiDataCapture.Data.Models.CreateRouteResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadContactDetail(System.String)">
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadPerson(System.String)">
             <summary>
-            Executes the <c>Read_ContactDetail</c> stored procedure.
+            Executes the <c>Read_Person</c> stored procedure.
             </summary>
             <param name="emailAddress">
             Provides the <c>@EmailAddress</c> parameter.
             </param>
             <returns>
-            An instance of type <see cref="T:SaatchiDataCapture.Data.Models.ReadContactDetailResult" />.
+            An instance of type <see cref="T:SaatchiDataCapture.Data.Models.ReadPersonResult" />.
             </returns>
         </member>
         <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider">
@@ -213,11 +213,10 @@
             Gets or sets the id of the inheriting entity.
             </summary>
         </member>
-        <member name="T:SaatchiDataCapture.Data.Models.ReadContactDetailResult">
+        <member name="T:SaatchiDataCapture.Data.Models.ReadPersonResult">
             <summary>
             Represents the return type for the
-            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadContactDetail(System.String)" />
-            method.
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadPerson(System.String)" /> method.
             </summary>
         </member>
     </members>

@@ -139,21 +139,35 @@
 
         /// <inheritdoc />
         public CreateRouteResult CreateRoute(
-            long person_Id,
+            long personId,
             DateTime created,
             DateTime captured,
             string routeIdentifier)
         {
             CreateRouteResult toReturn = null;
 
+            object sprocParameters =
+                new
+                {
+                    Person_Id = personId,
+                    Created = created,
+                    Captured = captured,
+                    RouteIdentifier = routeIdentifier,
+                };
+
+            toReturn =
+                this.ExecuteStoredProcedureSingularResult<CreateRouteResult>(
+                    "Create_Route",
+                    sprocParameters);
+
             return toReturn;
         }
 
         /// <inheritdoc />
-        public ReadContactDetailResult ReadContactDetail(
+        public ReadPersonResult ReadPerson(
             string emailAddress)
         {
-            ReadContactDetailResult toReturn = null;
+            ReadPersonResult toReturn = null;
 
             object sprocParameters =
                 new
@@ -162,8 +176,8 @@
                 };
 
             toReturn =
-                this.ExecuteStoredProcedureSingularResult<ReadContactDetailResult>(
-                    "Read_ContactDetail",
+                this.ExecuteStoredProcedureSingularResult<ReadPersonResult>(
+                    "Read_Person",
                     sprocParameters);
 
             return toReturn;

@@ -14,5 +14,13 @@
         /// An instance of <see cref="Person" />.
         /// </param>
         void Create(Person person);
+
+        /// <summary>
+        /// Updates a <see cref="Person" />.
+        /// </summary>
+        /// <param name="person">
+        /// An instance of <see cref="Person" />.
+        /// </param>
+        void Update(Person person);
     }
 }
