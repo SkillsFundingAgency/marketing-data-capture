@@ -144,5 +144,35 @@
         /// </returns>
         ReadPersonResult ReadPerson(
             string emailAddress);
+
+        /// <summary>
+        /// Executes the <c>Update_ContactDetail</c> stored procedure.
+        /// </summary>
+        /// <param name="id">
+        /// Provides the <c>@Id</c> parameter.
+        /// </param>
+        /// <param name="emailVerificationCompletion">
+        /// Provides the <c>@EmailVerificationCompletion</c> parameter.
+        /// </param>
+        void UpdateContactDetail(
+            long id,
+            DateTime? emailVerificationCompletion);
+
+        /// <summary>
+        /// Executes the <c>Update_Person</c> stored procedure.
+        /// </summary>
+        /// <param name="id">
+        /// Provides the <c>@Id</c> parameter.
+        /// </param>
+        /// <param name="firstName">
+        /// Provides the <c>@FirstName</c> parameter.
+        /// </param>
+        /// <param name="lastName">
+        /// Provides the <c>LastName</c> parameter.
+        /// </param>
+        void UpdatePerson(
+            long id,
+            string firstName,
+            string lastName);
     }
 }

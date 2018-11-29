@@ -183,6 +183,57 @@
             return toReturn;
         }
 
+        /// <inheritdoc />
+        public void UpdateContactDetail(
+            long id,
+            DateTime? emailVerificationCompletion)
+        {
+            object sprocParameters =
+                new
+                {
+                    Id = id,
+                    EmailVerificationCompletion = emailVerificationCompletion,
+                };
+
+            this.ExecuteStoredProcedure(
+                "Update_ContactDetail",
+                sprocParameters);
+        }
+
+        /// <inheritdoc />
+        public void UpdatePerson(
+            long id,
+            string firstName,
+            string lastName)
+        {
+            object sprocParameters =
+                new
+                {
+                    Id = id,
+                    FirstName = firstName,
+                    LastName = lastName,
+                };
+
+            this.ExecuteStoredProcedure(
+                "Update_Person",
+                sprocParameters);
+        }
+
+        private void ExecuteStoredProcedure(
+            string storedProcedureName,
+            object parameters)
+        {
+            using (IDbConnection sqlConnection = new SqlConnection(this.dataCaptureDatabaseConnectionString))
+            {
+                sqlConnection.Open();
+
+                sqlConnection.Execute(
+                    storedProcedureName,
+                    parameters,
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
         private TResultType ExecuteStoredProcedureSingularResult<TResultType>(
             string storedProcedureName,
             object parameters)

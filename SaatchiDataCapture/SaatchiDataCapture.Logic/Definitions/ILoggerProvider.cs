@@ -1,7 +1,6 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿// TODO: Log other types of error message? e.g. Debug?
+namespace SaatchiDataCapture.Logic.Definitions
 {
-    using System;
-
     /// <summary>
     /// Describes the operations of the logger provider.
     /// </summary>

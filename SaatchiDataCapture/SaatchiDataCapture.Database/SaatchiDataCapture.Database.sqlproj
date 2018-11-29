@@ -74,5 +74,7 @@
     <Build Include="Stored Procedures\Create_ContactDetail.sql" />
     <Build Include="Stored Procedures\Create_Consent.sql" />
     <Build Include="Stored Procedures\Read_Person.sql" />
+    <Build Include="Stored Procedures\Update_Person.sql" />
+    <Build Include="Stored Procedures\Update_ContactDetail.sql" />
   </ItemGroup>
 </Project>

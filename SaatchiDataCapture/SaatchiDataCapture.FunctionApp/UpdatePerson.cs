@@ -7,6 +7,7 @@
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
     using SaatchiDataCapture.FunctionApp.Infrastructure;
+    using SaatchiDataCapture.Logic;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
 
@@ -56,8 +57,26 @@
         {
             HttpStatusCode toReturn;
 
-            // TODO: Do the do.
-            toReturn = HttpStatusCode.NoContent;
+            traceWriter.Info(
+                $"Invoking " +
+                $"{nameof(IPersonManager)}.{nameof(IPersonManager.Update)}...");
+
+            try
+            {
+                personManager.Update(person);
+
+                traceWriter.Info(
+                    $"{nameof(IPersonManager)}.{nameof(IPersonManager.Update)} " +
+                    $"invoked with success.");
+
+                // Return Created.
+                toReturn = HttpStatusCode.NoContent;
+            }
+            catch (PersonRecordDoesNotExistException)
+            {
+                // Return conflicted.
+                toReturn = HttpStatusCode.NotFound;
+            }
 
             return toReturn;
         }

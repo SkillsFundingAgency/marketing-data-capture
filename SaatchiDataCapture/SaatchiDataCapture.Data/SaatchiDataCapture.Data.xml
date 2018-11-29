@@ -37,6 +37,12 @@
         <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.ReadPerson(System.String)">
             <inheritdoc />
         </member>
+        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.UpdateContactDetail(System.Int64,System.Nullable{System.DateTime})">
+            <inheritdoc />
+        </member>
+        <member name="M:SaatchiDataCapture.Data.DataCaptureDatabaseAdapter.UpdatePerson(System.Int64,System.String,System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter">
             <summary>
             Describes the operations of the data capture database adapter.
@@ -155,6 +161,31 @@
             <returns>
             An instance of type <see cref="T:SaatchiDataCapture.Data.Models.ReadPersonResult" />.
             </returns>
+        </member>
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.UpdateContactDetail(System.Int64,System.Nullable{System.DateTime})">
+            <summary>
+            Executes the <c>Update_ContactDetail</c> stored procedure.
+            </summary>
+            <param name="id">
+            Provides the <c>@Id</c> parameter.
+            </param>
+            <param name="emailVerificationCompletion">
+            Provides the <c>@EmailVerificationCompletion</c> parameter.
+            </param>
+        </member>
+        <member name="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.UpdatePerson(System.Int64,System.String,System.String)">
+            <summary>
+            Executes the <c>Update_Person</c> stored procedure.
+            </summary>
+            <param name="id">
+            Provides the <c>@Id</c> parameter.
+            </param>
+            <param name="firstName">
+            Provides the <c>@FirstName</c> parameter.
+            </param>
+            <param name="lastName">
+            Provides the <c>LastName</c> parameter.
+            </param>
         </member>
         <member name="T:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapterSettingsProvider">
             <summary>

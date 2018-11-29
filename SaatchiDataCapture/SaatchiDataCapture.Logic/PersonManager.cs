@@ -214,7 +214,32 @@
             this.InsertIntoOneToManyTables(personId, person);
 
             // Then update the Person and ContactDetail tables.
-            // TODO: Do this.
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdatePerson)} " +
+                $"with id {personId}...");
+
+            this.dataCaptureDatabaseAdapter.UpdatePerson(
+                personId,
+                person.FirstName,
+                person.LastName);
+
+            this.loggerProvider.Info(
+                $"Updated {nameof(Person)} id {personId}.");
+
+            long contactDetailId = readContactDetailResult.ContactDetail_Id;
+
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdateContactDetail)} " +
+                $"with id {contactDetailId}...");
+
+            this.dataCaptureDatabaseAdapter.UpdateContactDetail(
+                contactDetailId,
+                person.ContactDetail.EmailVerificationCompletion);
+
+            this.loggerProvider.Info(
+                $"Updated {nameof(ContactDetail)} id {contactDetailId}.");
         }
 
         private bool ModelIsValid(Person person)

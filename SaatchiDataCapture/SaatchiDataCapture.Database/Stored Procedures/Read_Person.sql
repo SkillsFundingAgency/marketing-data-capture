@@ -2,7 +2,7 @@
 -- Author:      Matt Middleton
 -- Create Date: 2018-11-27
 -- ============================================================================
-CREATE PROCEDURE [dbo].[Read_Person]
+CREATE PROCEDURE Read_Person
 (
     @EmailAddress NVARCHAR(256)
 )
