@@ -34,7 +34,7 @@ namespace SaatchiDataCapture.FunctionApp
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute(
+            IActionResult toReturn = FunctionLogicHarness.Execute<Models.CreatePerson.Person>(
                 httpRequest,
                 traceWriter,
                 (personManager, person) =>
@@ -53,7 +53,7 @@ namespace SaatchiDataCapture.FunctionApp
         private static HttpStatusCode PerformCreatePerson(
             TraceWriter traceWriter,
             IPersonManager personManager,
-            Person person)
+            Models.CreatePerson.Person createPerson)
         {
             HttpStatusCode toReturn;
 
@@ -63,6 +63,35 @@ namespace SaatchiDataCapture.FunctionApp
 
             try
             {
+                // Map to the global person class.
+                Person person = new Person()
+                {
+                    Consent = new Consent()
+                    {
+                        GdprConsentDeclared = createPerson.Consent.GdprConsentDeclared,
+                        GdprConsentGiven = createPerson.Consent.GdprConsentGiven,
+                    },
+                    ContactDetail = new ContactDetail()
+                    {
+                        Captured = createPerson.ContactDetail.Captured,
+                        EmailAddress = createPerson.ContactDetail.EmailAddress,
+                        EmailVerificationCompletion = createPerson.ContactDetail.EmailVerificationCompletion,
+                    },
+                    Cookie = new SaatchiDataCapture.Models.Cookie()
+                    {
+                        Captured = createPerson.Cookie.Captured,
+                        CookieIdentifier = createPerson.Cookie.CookieIdentifier,
+                    },
+                    Route = new Route()
+                    {
+                        Captured = createPerson.Route.Captured,
+                        RouteIdentifier = createPerson.Route.RouteIdentifier,
+                    },
+                    Enrolled = createPerson.Enrolled,
+                    FirstName = createPerson.FirstName,
+                    LastName = createPerson.LastName,
+                };
+
                 personManager.Create(person);
 
                 traceWriter.Info(

@@ -34,7 +34,7 @@
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute(
+            IActionResult toReturn = FunctionLogicHarness.Execute<Models.UpdatePerson.Person>(
                 httpRequest,
                 traceWriter,
                 (personManager, person) =>
@@ -53,7 +53,7 @@
         private static HttpStatusCode PerformUpdatePerson(
             TraceWriter traceWriter,
             IPersonManager personManager,
-            Person person)
+            Models.UpdatePerson.Person updatePerson)
         {
             HttpStatusCode toReturn;
 
@@ -63,6 +63,33 @@
 
             try
             {
+                // Map to the global person class.
+                Person person = new Person()
+                {
+                    Consent = new Consent()
+                    {
+                        GdprConsentDeclared = updatePerson.Consent.GdprConsentDeclared,
+                        GdprConsentGiven = updatePerson.Consent.GdprConsentGiven,
+                    },
+                    ContactDetail = new ContactDetail()
+                    {
+                        EmailAddress = updatePerson.ContactDetail.EmailAddress,
+                        EmailVerificationCompletion = updatePerson.ContactDetail.EmailVerificationCompletion,
+                    },
+                    Cookie = new SaatchiDataCapture.Models.Cookie()
+                    {
+                        Captured = updatePerson.Cookie.Captured,
+                        CookieIdentifier = updatePerson.Cookie.CookieIdentifier,
+                    },
+                    Route = new Route()
+                    {
+                        Captured = updatePerson.Route.Captured,
+                        RouteIdentifier = updatePerson.Route.RouteIdentifier,
+                    },
+                    FirstName = updatePerson.FirstName,
+                    LastName = updatePerson.LastName,
+                };
+
                 personManager.Update(person);
 
                 traceWriter.Info(

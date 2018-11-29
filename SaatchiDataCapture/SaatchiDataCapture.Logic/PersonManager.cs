@@ -129,7 +129,7 @@
             CreatePersonResult createPersonResult =
                 this.dataCaptureDatabaseAdapter.CreatePerson(
                     DateTime.UtcNow,
-                    person.Enrolled,
+                    person.Enrolled.Value,
                     person.FirstName,
                     person.LastName);
 
@@ -148,7 +148,7 @@
                 this.dataCaptureDatabaseAdapter.CreateContactDetail(
                     personId,
                     DateTime.UtcNow,
-                    person.ContactDetail.Captured,
+                    person.ContactDetail.Captured.Value,
                     person.ContactDetail.EmailAddress,
                     person.ContactDetail.EmailVerificationCompletion);
 

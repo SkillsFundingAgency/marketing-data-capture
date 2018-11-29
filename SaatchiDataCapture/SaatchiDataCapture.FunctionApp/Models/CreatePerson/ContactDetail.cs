@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Models
+﻿namespace SaatchiDataCapture.FunctionApp.Models.CreatePerson
 {
     using System;
 
@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets or sets when the detail was captured.
         /// </summary>
-        public DateTime? Captured
+        public DateTime Captured
         {
             get;
             set;

@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Models
+﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePerson
 {
     using System;
 
@@ -7,15 +7,6 @@
     /// </summary>
     public class ContactDetail : ModelsBase
     {
-        /// <summary>
-        /// Gets or sets when the detail was captured.
-        /// </summary>
-        public DateTime? Captured
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the email address.
         /// </summary>

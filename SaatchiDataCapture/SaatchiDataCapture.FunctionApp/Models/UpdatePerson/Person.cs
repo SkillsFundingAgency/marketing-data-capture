@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Models
+﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePerson
 {
     using System;
 
@@ -8,7 +8,7 @@
     public class Person : ModelsBase
     {
         /// <summary>
-        /// Gets or sets an instance of <see cref="Models.Consent" />.
+        /// Gets or sets an instance of <see cref="UpdatePerson.Consent" />.
         /// </summary>
         public Consent Consent
         {
@@ -17,7 +17,7 @@
         }
 
         /// <summary>
-        /// Gets or sets an instance of <see cref="Models.Cookie" />.
+        /// Gets or sets an instance of <see cref="UpdatePerson.Cookie" />.
         /// </summary>
         public Cookie Cookie
         {
@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Gets or sets an instance of <see cref="Models.Route" />.
+        /// Gets or sets an instance of <see cref="UpdatePerson.Route" />.
         /// </summary>
         public Route Route
         {
@@ -35,19 +35,10 @@
         }
 
         /// <summary>
-        /// Gets or sets an instance of <see cref="Models.ContactDetail" />.
+        /// Gets or sets an instance of
+        /// <see cref="UpdatePerson.ContactDetail" />.
         /// </summary>
         public ContactDetail ContactDetail
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="DateTime" /> in which the person was
-        /// enrolled.
-        /// </summary>
-        public DateTime? Enrolled
         {
             get;
             set;

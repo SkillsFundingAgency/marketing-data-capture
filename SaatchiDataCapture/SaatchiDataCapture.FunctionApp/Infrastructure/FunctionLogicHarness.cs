@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
-    using SaatchiDataCapture.FunctionApp.Infrastructure;
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
     using StructureMap;
@@ -32,6 +31,9 @@
         ///    provided <paramref name="traceWriter" />.
         /// 4) Provides the <see cref="IActionResult" />.
         /// </summary>
+        /// <typeparam name="TRequestBody">
+        /// A type deriving from <see cref="Models.ModelsBase" />.
+        /// </typeparam>
         /// <param name="httpRequest">
         /// An instance of <see cref="HttpRequest" />.
         /// </param>
@@ -41,24 +43,25 @@
         /// <param name="serviceInvocationLogic">
         /// The service invocation logic, accepting an instance of type
         /// <see cref="IPersonManager" /> and the deserialised
-        /// <see cref="Person" /> instance.
+        /// <typeparamref name="TRequestBody" /> instance.
         /// Returns a <see cref="HttpStatusCode" /> depending on expected
         /// outcomes.
         /// </param>
         /// <returns>
         /// An instance of <see cref="IActionResult" />.
         /// </returns>
-        public static IActionResult Execute(
+        public static IActionResult Execute<TRequestBody>(
             HttpRequest httpRequest,
             TraceWriter traceWriter,
-            Func<IPersonManager, Person, HttpStatusCode> serviceInvocationLogic)
+            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
+            where TRequestBody : Models.ModelsBase
         {
             IActionResult toReturn = null;
 
             HttpStatusCode httpStatusCode;
             try
             {
-                httpStatusCode = InvokePersonManager(
+                httpStatusCode = InvokePersonManager<TRequestBody>(
                     httpRequest,
                     traceWriter,
                     serviceInvocationLogic);
@@ -79,10 +82,11 @@
             return toReturn;
         }
 
-        private static HttpStatusCode InvokePersonManager(
+        private static HttpStatusCode InvokePersonManager<TRequestBody>(
             HttpRequest httpRequest,
             TraceWriter traceWriter,
-            Func<IPersonManager, Person, HttpStatusCode> serviceInvocationLogic)
+            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
+            where TRequestBody : Models.ModelsBase
         {
             HttpStatusCode toReturn;
 
@@ -90,11 +94,13 @@
             IPersonManager personManager =
                 GetIPersonManagerInstance(traceWriter);
 
-            Person person = ParseRequestBody(httpRequest, traceWriter);
+            TRequestBody requestBody = ParseRequestBody<TRequestBody>(
+                httpRequest,
+                traceWriter);
 
-            if (person != null)
+            if (requestBody != null)
             {
-                toReturn = serviceInvocationLogic(personManager, person);
+                toReturn = serviceInvocationLogic(personManager, requestBody);
             }
             else
             {
@@ -163,11 +169,14 @@
             return toReturn;
         }
 
-        private static Person ParseRequestBody(
+        private static TRequestBody ParseRequestBody<TRequestBody>(
             HttpRequest httpRequest,
             TraceWriter traceWriter)
+            where TRequestBody : Models.ModelsBase
         {
-            Person toReturn = null;
+            TRequestBody toReturn = null;
+
+            Type requestBodyType = typeof(TRequestBody);
 
             traceWriter.Info("Reading the request body...");
 
@@ -179,11 +188,12 @@
 
             traceWriter.Info(
                 $"Request body: \"{requestBody}\". Parsing body into " +
-                $"{nameof(Person)} instance...");
+                $"{requestBodyType.Name} instance...");
 
             try
             {
-                toReturn = JsonConvert.DeserializeObject<Person>(requestBody);
+                toReturn = JsonConvert.DeserializeObject<TRequestBody>(
+                    requestBody);
 
                 traceWriter.Info($"Parsed: {toReturn}.");
             }

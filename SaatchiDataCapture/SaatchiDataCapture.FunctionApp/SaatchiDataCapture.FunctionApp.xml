@@ -37,7 +37,7 @@
             for all functions.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.Execute(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter,System.Func{SaatchiDataCapture.Logic.Definitions.IPersonManager,SaatchiDataCapture.Models.Person,System.Net.HttpStatusCode})">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.Execute``1(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter,System.Func{SaatchiDataCapture.Logic.Definitions.IPersonManager,``0,System.Net.HttpStatusCode})">
             <summary>
             Performs 3 common actions for all function entry points:
             1) Initialises and creates an instance of
@@ -52,6 +52,9 @@
                provided <paramref name="traceWriter" />.
             4) Provides the <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
             </summary>
+            <typeparam name="TRequestBody">
+            A type deriving from <see cref="T:SaatchiDataCapture.FunctionApp.Models.ModelsBase" />.
+            </typeparam>
             <param name="httpRequest">
             An instance of <see cref="T:Microsoft.AspNetCore.Http.HttpRequest" />.
             </param>
@@ -61,7 +64,7 @@
             <param name="serviceInvocationLogic">
             The service invocation logic, accepting an instance of type
             <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" /> and the deserialised
-            <see cref="T:SaatchiDataCapture.Models.Person" /> instance.
+            <typeparamref name="TRequestBody" /> instance.
             Returns a <see cref="T:System.Net.HttpStatusCode" /> depending on expected
             outcomes.
             </param>
@@ -99,6 +102,219 @@
             <param name="executingAssemblyLocation">
             The location of the executing assembly (i.e. the bin directory).
             </param>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Consent">
+            <summary>
+            Represents consent.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Consent.GdprConsentDeclared">
+            <summary>
+            Gets or sets when the consent (or lack of) was declared.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Consent.GdprConsentGiven">
+            <summary>
+            Gets or sets whether or not consent was given (or indeed, neither
+            given or denied if null).
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.ContactDetail">
+            <summary>
+            Represents contact detail.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.ContactDetail.Captured">
+            <summary>
+            Gets or sets when the detail was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.ContactDetail.EmailAddress">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.ContactDetail.EmailVerificationCompletion">
+            <summary>
+            Gets or sets when the email address was verified.
+            If null, then the email address has not been verified.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Cookie">
+            <summary>
+            Represents a cookie.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Cookie.Captured">
+            <summary>
+            Gets or sets when the cookie was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Cookie.CookieIdentifier">
+            <summary>
+            Gets or sets the cookie's identifier.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person">
+            <summary>
+            Represents a person.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.Consent">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Consent" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.Cookie">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Cookie" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.Route">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Route" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.ContactDetail">
+            <summary>
+            Gets or sets an instance of
+            <see cref="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.ContactDetail" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.Enrolled">
+            <summary>
+            Gets or sets the <see cref="T:System.DateTime" /> in which the person was
+            enrolled.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Person.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Route">
+            <summary>
+            Represents a route.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Route.Captured">
+            <summary>
+            Gets or sets when the route was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.CreatePerson.Route.RouteIdentifier">
+            <summary>
+            Gets or sets the route's identifier.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.ModelsBase">
+            <summary>
+            Abstract base class for all models in the
+            <c>SaatchiDataCapture.FunctionApp</c> namespace.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Consent">
+            <summary>
+            Represents consent.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Consent.GdprConsentDeclared">
+            <summary>
+            Gets or sets when the consent (or lack of) was declared.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Consent.GdprConsentGiven">
+            <summary>
+            Gets or sets whether or not consent was given (or indeed, neither
+            given or denied if null).
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.ContactDetail">
+            <summary>
+            Represents contact detail.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.ContactDetail.EmailAddress">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.ContactDetail.EmailVerificationCompletion">
+            <summary>
+            Gets or sets when the email address was verified.
+            If null, then the email address has not been verified.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Cookie">
+            <summary>
+            Represents a cookie.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Cookie.Captured">
+            <summary>
+            Gets or sets when the cookie was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Cookie.CookieIdentifier">
+            <summary>
+            Gets or sets the cookie's identifier.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person">
+            <summary>
+            Represents a person.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.Consent">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Consent" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.Cookie">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Cookie" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.Route">
+            <summary>
+            Gets or sets an instance of <see cref="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Route" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.ContactDetail">
+            <summary>
+            Gets or sets an instance of
+            <see cref="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.ContactDetail" />.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Person.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+        </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Route">
+            <summary>
+            Represents a route.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Route.Captured">
+            <summary>
+            Gets or sets when the route was captured.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePerson.Route.RouteIdentifier">
+            <summary>
+            Gets or sets the route's identifier.
+            </summary>
         </member>
         <member name="T:SaatchiDataCapture.FunctionApp.UpdatePerson">
             <summary>
