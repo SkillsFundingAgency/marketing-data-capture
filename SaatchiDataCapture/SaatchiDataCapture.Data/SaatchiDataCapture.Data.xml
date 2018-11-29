@@ -170,35 +170,35 @@
         <member name="T:SaatchiDataCapture.Data.Models.CreateConsentResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateConsent(long, System.DateTime, System.DateTime, bool?)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateConsent(System.Int64,System.DateTime,System.DateTime,System.Nullable{System.Boolean})" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateContactDetailResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateContactDetail(long, DateTime, DateTime, string, DateTime?)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateContactDetail(System.Int64,System.DateTime,System.DateTime,System.String,System.Nullable{System.DateTime})" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateCookieResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateCookie(long, System.DateTime, System.DateTime, string)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateCookie(System.Int64,System.DateTime,System.DateTime,System.String)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreatePersonResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreatePerson(DateTime, DateTime, string, string)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreatePerson(System.DateTime,System.DateTime,System.String,System.String)" />
             method.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.CreateRouteResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.CreateRoute(long, DateTime, DateTime, string)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.CreateRoute(System.Int64,System.DateTime,System.DateTime,System.String)" />
             method.
             </summary>
         </member>
@@ -216,7 +216,7 @@
         <member name="T:SaatchiDataCapture.Data.Models.ReadContactDetailResult">
             <summary>
             Represents the return type for the
-            <see cref="!:IDataCaptureDatabaseContract.ReadContactDetail(string)" />
+            <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadContactDetail(System.String)" />
             method.
             </summary>
         </member>

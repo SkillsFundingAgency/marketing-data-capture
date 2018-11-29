@@ -31,6 +31,44 @@
         <member name="P:SaatchiDataCapture.FunctionApp.Infrastructure.DataCaptureDatabaseAdapterSettingsProvider.DataCaptureDatabaseConnectionString">
             <inheritdoc />
         </member>
+        <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness">
+            <summary>
+            Provides common error handling and provisions for dependency injection
+            for all functions.
+            </summary>
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.Execute(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter,System.Func{SaatchiDataCapture.Logic.Definitions.IPersonManager,SaatchiDataCapture.Models.Person,System.Net.HttpStatusCode})">
+            <summary>
+            Performs 3 common actions for all function entry points:
+            1) Initialises and creates an instance of
+               <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" /> via the container, providing an
+               entry point to the logic library.
+            2) Deserialises the request body into a <see cref="T:SaatchiDataCapture.Models.Person" />
+               instance.
+            3) Wraps <paramref name="serviceInvocationLogic" /> in a try catch,
+               providing global error handling across all functions. In every
+               instance, if an unhandled/unexpected exception is thrown, then
+               a 500 will be returned, and the exception logged via the
+               provided <paramref name="traceWriter" />.
+            4) Provides the <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
+            </summary>
+            <param name="httpRequest">
+            An instance of <see cref="T:Microsoft.AspNetCore.Http.HttpRequest" />.
+            </param>
+            <param name="traceWriter">
+            An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
+            </param>
+            <param name="serviceInvocationLogic">
+            The service invocation logic, accepting an instance of type
+            <see cref="T:SaatchiDataCapture.Logic.Definitions.IPersonManager" /> and the deserialised
+            <see cref="T:SaatchiDataCapture.Models.Person" /> instance.
+            Returns a <see cref="T:System.Net.HttpStatusCode" /> depending on expected
+            outcomes.
+            </param>
+            <returns>
+            An instance of <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
+            </returns>
+        </member>
         <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider">
             <summary>
             Implements <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
@@ -48,15 +86,15 @@
         <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Info(System.String)">
             <inheritdoc />
         </member>
-        <member name="T:SaatchiDataCapture.FunctionApp.Registry">
+        <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.Registry">
             <summary>
             Custom, host-specific implementation of
             <see cref="T:StructureMap.Registry" />.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.Registry.#ctor(System.String)">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.Registry.#ctor(System.String)">
             <summary>
-            Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Registry" /> class.
+            Initialises a new instance of the <see cref="T:SaatchiDataCapture.FunctionApp.Infrastructure.Registry" /> class.
             </summary>
             <param name="executingAssemblyLocation">
             The location of the executing assembly (i.e. the bin directory).
