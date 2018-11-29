@@ -92,7 +92,16 @@
 
             Person person = ParseRequestBody(httpRequest, traceWriter);
 
-            toReturn = serviceInvocationLogic(personManager, person);
+            if (person != null)
+            {
+                toReturn = serviceInvocationLogic(personManager, person);
+            }
+            else
+            {
+                // If person == null, then the JSON couldn't be parsed
+                // correctly. Return a BadRequest.
+                toReturn = HttpStatusCode.BadRequest;
+            }
 
             return toReturn;
         }
@@ -172,9 +181,17 @@
                 $"Request body: \"{requestBody}\". Parsing body into " +
                 $"{nameof(Person)} instance...");
 
-            toReturn = JsonConvert.DeserializeObject<Person>(requestBody);
+            try
+            {
+                toReturn = JsonConvert.DeserializeObject<Person>(requestBody);
 
-            traceWriter.Info($"Parsed: {toReturn}.");
+                traceWriter.Info($"Parsed: {toReturn}.");
+            }
+            catch (JsonReaderException)
+            {
+                // Do nothing - this method will return null if the JSON is
+                // badly formed.
+            }
 
             return toReturn;
         }
