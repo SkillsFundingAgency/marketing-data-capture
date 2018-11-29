@@ -11,7 +11,8 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-		p.Id
+		p.Id,
+        cd.Id AS ContactDetail_Id
 	FROM Person AS p
 	INNER JOIN ContactDetail AS cd ON cd.Person_Id = p.Id
 	WHERE cd.EmailAddress = @EmailAddress;

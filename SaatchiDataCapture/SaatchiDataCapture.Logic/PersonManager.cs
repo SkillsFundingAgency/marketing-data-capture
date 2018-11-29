@@ -139,49 +139,7 @@
             long personId = createPersonResult.Id;
 
             // Now we have an id for Person, insert into the satellite tables.
-            // 2) Consent
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
-
-            CreateConsentResult createConsentResult =
-                this.dataCaptureDatabaseAdapter.CreateConsent(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Consent.GdprConsentDeclared,
-                    person.Consent.GdprConsentGiven);
-
-            this.loggerProvider.Info($"Created: {createConsentResult}.");
-
-            // 3) Cookie
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
-
-            CreateCookieResult createCookieResult =
-                this.dataCaptureDatabaseAdapter.CreateCookie(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Cookie.Captured,
-                    person.Cookie.CookieIdentifier);
-
-            this.loggerProvider.Info($"Created: {createCookieResult}.");
-
-            // 4) Route
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
-
-            CreateRouteResult createRouteResult =
-                this.dataCaptureDatabaseAdapter.CreateRoute(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Route.Captured,
-                    person.Route.RouteIdentifier);
-
-            this.loggerProvider.Info($"Created: {createCookieResult}.");
-
-            // 5) ContactDetail
+            // 2) ContactDetail
             this.loggerProvider.Info(
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateContactDetail)}...");
@@ -195,13 +153,68 @@
                     person.ContactDetail.EmailVerificationCompletion);
 
             this.loggerProvider.Info($"Created: {createContactDetailResult}.");
+
+            this.InsertIntoOneToManyTables(personId, person);
+        }
+
+        private void InsertIntoOneToManyTables(
+            long personId,
+            Person person)
+        {
+            // 3) Consent
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
+
+            CreateConsentResult createConsentResult =
+                this.dataCaptureDatabaseAdapter.CreateConsent(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Consent.GdprConsentDeclared,
+                    person.Consent.GdprConsentGiven);
+
+            this.loggerProvider.Info($"Created: {createConsentResult}.");
+
+            // 4) Cookie
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
+
+            CreateCookieResult createCookieResult =
+                this.dataCaptureDatabaseAdapter.CreateCookie(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Cookie.Captured,
+                    person.Cookie.CookieIdentifier);
+
+            this.loggerProvider.Info($"Created: {createCookieResult}.");
+
+            // 5) Route
+            this.loggerProvider.Info(
+                $"Invoking " +
+                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
+
+            CreateRouteResult createRouteResult =
+                this.dataCaptureDatabaseAdapter.CreateRoute(
+                    personId,
+                    DateTime.UtcNow,
+                    person.Route.Captured,
+                    person.Route.RouteIdentifier);
+
+            this.loggerProvider.Info($"Created: {createCookieResult}.");
         }
 
         private void UpdatePersonInDatabase(
             Person person,
             ReadPersonResult readContactDetailResult)
         {
-            // TODO: Do the do.
+            // First, insert the one-to-many records, as required.
+            long personId = readContactDetailResult.Id;
+
+            this.InsertIntoOneToManyTables(personId, person);
+
+            // Then update the Person and ContactDetail tables.
+            // TODO: Do this.
         }
 
         private bool ModelIsValid(Person person)

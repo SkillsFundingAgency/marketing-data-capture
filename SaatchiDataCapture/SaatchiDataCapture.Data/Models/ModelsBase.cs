@@ -7,7 +7,7 @@
     public abstract class ModelsBase : Common.Models.ModelsBase
     {
         /// <summary>
-        /// Gets or sets the id of the inheriting entity.
+        /// Gets or sets the value of the <c>Id</c> column.
         /// </summary>
         public long Id
         {

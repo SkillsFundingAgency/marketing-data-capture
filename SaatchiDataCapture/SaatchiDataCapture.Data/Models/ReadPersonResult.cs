@@ -1,5 +1,6 @@
 ﻿namespace SaatchiDataCapture.Data.Models
 {
+    using System.Diagnostics.CodeAnalysis;
     using SaatchiDataCapture.Data.Definitions;
 
     /// <summary>
@@ -8,6 +9,17 @@
     /// </summary>
     public class ReadPersonResult : ModelsBase
     {
-        // Nothing - just inherits from the base.
+        /// <summary>
+        /// Gets or sets the value of the <c>ContactDetail_Id</c> column.
+        /// </summary>
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1707",
+            Justification = "This model represents the column output of a stored procedure. Underscores are used in the database, and therefore need to be reflected here.")]
+        public long ContactDetail_Id
+        {
+            get;
+            set;
+        }
     }
 }

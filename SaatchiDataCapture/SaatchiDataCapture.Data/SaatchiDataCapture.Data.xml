@@ -210,13 +210,18 @@
         </member>
         <member name="P:SaatchiDataCapture.Data.Models.ModelsBase.Id">
             <summary>
-            Gets or sets the id of the inheriting entity.
+            Gets or sets the value of the <c>Id</c> column.
             </summary>
         </member>
         <member name="T:SaatchiDataCapture.Data.Models.ReadPersonResult">
             <summary>
             Represents the return type for the
             <see cref="M:SaatchiDataCapture.Data.Definitions.IDataCaptureDatabaseAdapter.ReadPerson(System.String)" /> method.
+            </summary>
+        </member>
+        <member name="P:SaatchiDataCapture.Data.Models.ReadPersonResult.ContactDetail_Id">
+            <summary>
+            Gets or sets the value of the <c>ContactDetail_Id</c> column.
             </summary>
         </member>
     </members>
