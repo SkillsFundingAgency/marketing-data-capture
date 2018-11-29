@@ -35,72 +35,59 @@
         /// <inheritdoc />
         public void Create(Person person)
         {
-            // TODO: Validate the Person instance.
-            // TODO: Is this the right place for this?
-            bool personIsValid = this.ModelIsValid(person);
+            string emailAddress = person.ContactDetail.EmailAddress;
 
-            if (personIsValid)
+            // As this is a create request, we can only create the record
+            // if the email address does not exist currently.
+            // Check for the Person instance first off.
+            ReadPersonResult readPersonResult =
+                this.GetContactDetailByEmail(emailAddress);
+
+            if (readPersonResult == null)
             {
-                string emailAddress = person.ContactDetail.EmailAddress;
+                this.loggerProvider.Info(
+                    $"\"{emailAddress}\" does not exist. Going ahead " +
+                    $"with insert of {person}.");
 
-                // As this is a create request, we can only create the record
-                // if the email address does not exist currently.
-                // Check for the Person instance first off.
-                ReadPersonResult readPersonResult =
-                    this.GetContactDetailByEmail(emailAddress);
+                this.InsertRecordsIntoDatabase(person);
 
-                if (readPersonResult == null)
-                {
-                    this.loggerProvider.Info(
-                        $"\"{emailAddress}\" does not exist. Going ahead " +
-                        $"with insert of {person}.");
-
-                    this.InsertRecordsIntoDatabase(person);
-
-                    this.loggerProvider.Info(
-                        $"{person} was inserted into the database " +
-                        $"successfully.");
-                }
-                else
-                {
-                    throw new PersonRecordExistsAlreadyException(emailAddress);
-                }
+                this.loggerProvider.Info(
+                    $"{person} was inserted into the database " +
+                    $"successfully.");
+            }
+            else
+            {
+                throw new PersonRecordExistsAlreadyException(emailAddress);
             }
         }
 
         /// <inheritdoc />
         public void Update(Person person)
         {
-            bool personIsValid = this.ModelIsValid(person);
+            // As this is an update request, we can only update the record
+            // if the email address exists currently.
+            // Check for the Person instance first off.
+            string emailAddress = person.ContactDetail.EmailAddress;
 
-            if (personIsValid)
+            ReadPersonResult readPersonResult =
+                this.GetContactDetailByEmail(emailAddress);
+
+            if (readPersonResult != null)
             {
-                // As this is an update request, we can only update the record
-                // if the email address exists currently.
-                // Check for the Person instance first off.
-                string emailAddress = person.ContactDetail.EmailAddress;
+                this.loggerProvider.Info(
+                    $"\"{emailAddress}\" exists. Going ahead with " +
+                    $"update of {person}.");
 
-                ReadPersonResult readPersonResult =
-                    this.GetContactDetailByEmail(emailAddress);
+                this.UpdatePersonInDatabase(
+                    person,
+                    readPersonResult);
 
-                if (readPersonResult != null)
-                {
-                    this.loggerProvider.Info(
-                        $"\"{emailAddress}\" exists. Going ahead with " +
-                        $"update of {person}.");
-
-                    this.UpdatePersonInDatabase(
-                        person,
-                        readPersonResult);
-
-                    this.loggerProvider.Info(
-                        $"{person} was updated successfully.");
-                }
-                else
-                {
-                    throw new PersonRecordDoesNotExistException(
-                        emailAddress);
-                }
+                this.loggerProvider.Info(
+                    $"{person} was updated successfully.");
+            }
+            else
+            {
+                throw new PersonRecordDoesNotExistException(emailAddress);
             }
         }
 
@@ -240,16 +227,6 @@
 
             this.loggerProvider.Info(
                 $"Updated {nameof(ContactDetail)} id {contactDetailId}.");
-        }
-
-        private bool ModelIsValid(Person person)
-        {
-            bool toReturn = true;
-
-            this.loggerProvider.Info($"Checking the validity of {person}...");
-
-            // TODO: Compelte me.
-            return toReturn;
         }
     }
 }

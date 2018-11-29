@@ -1,7 +1,10 @@
 ﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -98,7 +101,7 @@
                 httpRequest,
                 traceWriter);
 
-            if (requestBody != null)
+            if (requestBody != null && ValidateModel(traceWriter, requestBody))
             {
                 toReturn = serviceInvocationLogic(personManager, requestBody);
             }
@@ -108,6 +111,69 @@
                 // correctly. Return a BadRequest.
                 toReturn = HttpStatusCode.BadRequest;
             }
+
+            return toReturn;
+        }
+
+        private static bool ValidateModel<TRequestBody>(
+            TraceWriter traceWriter,
+            TRequestBody requestBody)
+            where TRequestBody : Models.ModelsBase
+        {
+            bool toReturn = false;
+
+            ValidationContext validationContext = new ValidationContext(
+                requestBody,
+                null,
+                null);
+
+            List<ValidationResult> validationResults =
+                new List<ValidationResult>();
+
+            traceWriter.Info($"Performing validation of {requestBody}...");
+
+            toReturn = Validator.TryValidateObject(
+                requestBody,
+                validationContext,
+                validationResults);
+
+            if (toReturn)
+            {
+                traceWriter.Info($"{requestBody} passed validation!");
+            }
+            else
+            {
+                string[] validationList = validationResults
+                    .Select(ValidationResultToString)
+                    .ToArray();
+
+                string validationListConcat =
+                    string.Join(", ", validationList);
+
+                string validationFailuresDesc =
+                    $"{validationResults.Count} validation error(s) were " +
+                    $"highlighted. These are: {validationListConcat}.";
+
+                traceWriter.Warning(
+                    $"{requestBody} failed validation. " +
+                    $"{validationFailuresDesc}.");
+            }
+
+            return toReturn;
+        }
+
+        private static string ValidationResultToString(
+            ValidationResult validationResult)
+        {
+            string toReturn = null;
+
+            string[] affectedFields = validationResult.MemberNames
+                .ToArray();
+
+            string affectedFieldsDesc = string.Join(", ", affectedFields);
+
+            toReturn =
+                $"{validationResult.ErrorMessage} ({affectedFieldsDesc})";
 
             return toReturn;
         }
