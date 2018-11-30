@@ -1,6 +1,6 @@
 ﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody
 {
-    using System;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// Represents a person.
@@ -38,6 +38,7 @@
         /// Gets or sets an instance of
         /// <see cref="UpdatePersonBody.ContactDetail" />.
         /// </summary>
+        [Required]
         public ContactDetail ContactDetail
         {
             get;
@@ -47,6 +48,7 @@
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
+        [MaxLength(256)]
         public string FirstName
         {
             get;
@@ -56,6 +58,7 @@
         /// <summary>
         /// Gets or sets the last name.
         /// </summary>
+        [MaxLength(256)]
         public string LastName
         {
             get;

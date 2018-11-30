@@ -39,8 +39,11 @@
                 traceWriter,
                 (person) =>
                 {
-                    // TODO: Validate.
-                    return true;
+                    bool passedValidation = PerformPersonValidation(
+                        traceWriter,
+                        person);
+
+                    return passedValidation;
                 },
                 (personManager, person) =>
                 {
@@ -53,6 +56,48 @@
                 });
 
             return toReturn;
+        }
+
+        private static bool PerformPersonValidation(
+            TraceWriter traceWriter,
+            Models.UpdatePersonBody.Person person)
+        {
+            bool passedValidation = true;
+
+            // The top level is validated for free.
+            // If the top level passed, now validate the sub-properties.
+            if (passedValidation && (person.Consent != null))
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Consent);
+            }
+
+            // ContactDetail is required, whilst the others are optional.
+            // We need ContactDetail because it contains the key we use to
+            // look up a person.
+            if (passedValidation)
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.ContactDetail);
+            }
+
+            if (passedValidation && (person.Cookie != null))
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Cookie);
+            }
+
+            if (passedValidation && (person.Cookie != null))
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Route);
+            }
+
+            return passedValidation;
         }
 
         private static HttpStatusCode PerformUpdatePerson(
@@ -71,29 +116,69 @@
                 // Map to the global person class.
                 Person person = new Person()
                 {
-                    Consent = new Consent()
-                    {
-                        GdprConsentDeclared = updatePerson.Consent.GdprConsentDeclared,
-                        GdprConsentGiven = updatePerson.Consent.GdprConsentGiven,
-                    },
+                    // ContactDetail is not optional...
                     ContactDetail = new ContactDetail()
                     {
+                        // And neither is email address, as this is how we
+                        // look up the person.
                         EmailAddress = updatePerson.ContactDetail.EmailAddress,
-                        EmailVerificationCompletion = updatePerson.ContactDetail.EmailVerificationCompletion,
-                    },
-                    Cookie = new SaatchiDataCapture.Models.Cookie()
-                    {
-                        Captured = updatePerson.Cookie.Captured,
-                        CookieIdentifier = updatePerson.Cookie.CookieIdentifier,
-                    },
-                    Route = new Route()
-                    {
-                        Captured = updatePerson.Route.Captured,
-                        RouteIdentifier = updatePerson.Route.RouteIdentifier,
                     },
                     FirstName = updatePerson.FirstName,
                     LastName = updatePerson.LastName,
                 };
+
+                if (updatePerson.ContactDetail.UpdateEmailVerificationCompletion)
+                {
+                    // Note: Why the above?
+                    // EmailVerificationCompletion is valid to be null
+                    // (indicating it's still not verified) or to have a
+                    // DateTime describing when it was verified.
+                    // For more detail, see the docs on
+                    // UpdatePersonBody.ContactDetail.EmailVerificationCompletion.
+                    person.ContactDetail.EmailVerificationCompletion =
+                        updatePerson.ContactDetail.EmailVerificationCompletion;
+                }
+
+                // Consent is optional. However, if declared, then...
+                if (updatePerson.Consent != null)
+                {
+                    person.Consent = new Consent()
+                    {
+                        // It needs the GdprConsentDeclared property specified.
+                        GdprConsentDeclared = updatePerson.Consent.GdprConsentDeclared.Value,
+
+                        // Whereas valid states for this property is either
+                        // true, false or null.
+                        GdprConsentGiven = updatePerson.Consent.GdprConsentGiven,
+                    };
+                }
+
+                // Cookie is also optional. However if declared, then...
+                if (updatePerson.Cookie != null)
+                {
+                    person.Cookie = new SaatchiDataCapture.Models.Cookie()
+                    {
+                        // Needs the captured date.
+                        Captured = updatePerson.Cookie.Captured.Value,
+
+                        // And the cookie identifier (doesn't make sense for
+                        // it to be null).
+                        CookieIdentifier = updatePerson.Cookie.CookieIdentifier,
+                    };
+                }
+
+                // Route is also optional. However if declared...
+                if (updatePerson.Route != null)
+                {
+                    person.Route = new Route()
+                    {
+                        // Then the captured date needs to be specified...
+                        Captured = updatePerson.Route.Captured.Value,
+
+                        // As does the RouteIdentifier.
+                        RouteIdentifier = updatePerson.Route.RouteIdentifier,
+                    };
+                }
 
                 personManager.Update(person);
 
