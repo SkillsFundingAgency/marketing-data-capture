@@ -62,7 +62,7 @@
         }
 
         /// <inheritdoc />
-        public void Update(Person person)
+        public void Update(Person person, bool updateEmailAddressVerification)
         {
             // As this is an update request, we can only update the record
             // if the email address exists currently.
@@ -80,7 +80,8 @@
 
                 this.UpdatePersonInDatabase(
                     person,
-                    readPersonResult);
+                    readPersonResult,
+                    updateEmailAddressVerification);
 
                 this.loggerProvider.Info(
                     $"{person} was updated successfully.");
@@ -148,52 +149,67 @@
             long personId,
             Person person)
         {
-            // 3) Consent
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
+            // Why the null checks?
+            // When updating, the sattelite classes are optional (bar
+            // ContactDetail).
+            // Since validation is the responsibility of a level above,
+            // we don't have to worry about this.
+            if (person.Consent != null)
+            {
+                // 3) Consent
+                this.loggerProvider.Info(
+                    $"Invoking " +
+                    $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
 
-            CreateConsentResult createConsentResult =
-                this.dataCaptureDatabaseAdapter.CreateConsent(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Consent.GdprConsentDeclared,
-                    person.Consent.GdprConsentGiven);
+                CreateConsentResult createConsentResult =
+                    this.dataCaptureDatabaseAdapter.CreateConsent(
+                        personId,
+                        DateTime.UtcNow,
+                        person.Consent.GdprConsentDeclared,
+                        person.Consent.GdprConsentGiven);
 
-            this.loggerProvider.Info($"Created: {createConsentResult}.");
+                this.loggerProvider.Info($"Created: {createConsentResult}.");
+            }
 
-            // 4) Cookie
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
+            if (person.Cookie != null)
+            {
+                // 4) Cookie
+                this.loggerProvider.Info(
+                    $"Invoking " +
+                    $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
 
-            CreateCookieResult createCookieResult =
-                this.dataCaptureDatabaseAdapter.CreateCookie(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Cookie.Captured,
-                    person.Cookie.CookieIdentifier);
+                CreateCookieResult createCookieResult =
+                    this.dataCaptureDatabaseAdapter.CreateCookie(
+                        personId,
+                        DateTime.UtcNow,
+                        person.Cookie.Captured,
+                        person.Cookie.CookieIdentifier);
 
-            this.loggerProvider.Info($"Created: {createCookieResult}.");
+                this.loggerProvider.Info($"Created: {createCookieResult}.");
+            }
 
-            // 5) Route
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
+            if (person.Route != null)
+            {
+                // 5) Route
+                this.loggerProvider.Info(
+                    $"Invoking " +
+                    $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
 
-            CreateRouteResult createRouteResult =
-                this.dataCaptureDatabaseAdapter.CreateRoute(
-                    personId,
-                    DateTime.UtcNow,
-                    person.Route.Captured,
-                    person.Route.RouteIdentifier);
+                CreateRouteResult createRouteResult =
+                    this.dataCaptureDatabaseAdapter.CreateRoute(
+                        personId,
+                        DateTime.UtcNow,
+                        person.Route.Captured,
+                        person.Route.RouteIdentifier);
 
-            this.loggerProvider.Info($"Created: {createCookieResult}.");
+                this.loggerProvider.Info($"Created: {createRouteResult}.");
+            }
         }
 
         private void UpdatePersonInDatabase(
             Person person,
-            ReadPersonResult readContactDetailResult)
+            ReadPersonResult readContactDetailResult,
+            bool updateEmailAddressVerification)
         {
             // First, insert the one-to-many records, as required.
             long personId = readContactDetailResult.Id;
@@ -214,19 +230,22 @@
             this.loggerProvider.Info(
                 $"Updated {nameof(Person)} id {personId}.");
 
-            long contactDetailId = readContactDetailResult.ContactDetail_Id;
+            if (updateEmailAddressVerification)
+            {
+                long contactDetailId = readContactDetailResult.ContactDetail_Id;
 
-            this.loggerProvider.Info(
-                $"Invoking " +
-                $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdateContactDetail)} " +
-                $"with id {contactDetailId}...");
+                this.loggerProvider.Info(
+                    $"Invoking " +
+                    $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdateContactDetail)} " +
+                    $"with id {contactDetailId}...");
 
-            this.dataCaptureDatabaseAdapter.UpdateContactDetail(
-                contactDetailId,
-                person.ContactDetail.EmailVerificationCompletion);
+                this.dataCaptureDatabaseAdapter.UpdateContactDetail(
+                    contactDetailId,
+                    person.ContactDetail.EmailVerificationCompletion);
 
-            this.loggerProvider.Info(
-                $"Updated {nameof(ContactDetail)} id {contactDetailId}.");
+                this.loggerProvider.Info(
+                    $"Updated {nameof(ContactDetail)} id {contactDetailId}.");
+            }
         }
     }
 }

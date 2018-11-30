@@ -21,6 +21,13 @@
         /// <param name="person">
         /// An instance of <see cref="Person" />.
         /// </param>
-        void Update(Person person);
+        /// <param name="updateEmailAddressVerification">
+        /// A flag indicating whether or not to update
+        /// <see cref="ContactDetail.EmailVerificationCompletion" />.
+        /// <see cref="ContactDetail.EmailVerificationCompletion" /> is valid
+        /// to be null (indicating it's still not verified) or to have a
+        /// DateTime describing when it was verified.
+        /// </param>
+        void Update(Person person, bool updateEmailAddressVerification);
     }
 }

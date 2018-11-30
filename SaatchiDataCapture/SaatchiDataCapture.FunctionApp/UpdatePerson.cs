@@ -122,22 +122,14 @@
                         // And neither is email address, as this is how we
                         // look up the person.
                         EmailAddress = updatePerson.ContactDetail.EmailAddress,
+
+                        // This will only be updated, depending on
+                        // UpdatePersonBody.ContactDetail.EmailVerificationCompletion.
+                        EmailVerificationCompletion = updatePerson.ContactDetail.EmailVerificationCompletion,
                     },
                     FirstName = updatePerson.FirstName,
                     LastName = updatePerson.LastName,
                 };
-
-                if (updatePerson.ContactDetail.UpdateEmailVerificationCompletion)
-                {
-                    // Note: Why the above?
-                    // EmailVerificationCompletion is valid to be null
-                    // (indicating it's still not verified) or to have a
-                    // DateTime describing when it was verified.
-                    // For more detail, see the docs on
-                    // UpdatePersonBody.ContactDetail.EmailVerificationCompletion.
-                    person.ContactDetail.EmailVerificationCompletion =
-                        updatePerson.ContactDetail.EmailVerificationCompletion;
-                }
 
                 // Consent is optional. However, if declared, then...
                 if (updatePerson.Consent != null)
@@ -180,7 +172,9 @@
                     };
                 }
 
-                personManager.Update(person);
+                personManager.Update(
+                    person,
+                    updatePerson.ContactDetail.UpdateEmailVerificationCompletion);
 
                 traceWriter.Info(
                     $"{nameof(IPersonManager)}.{nameof(IPersonManager.Update)} " +

@@ -14,8 +14,8 @@ BEGIN
 
     UPDATE Person
     SET
-        FirstName = @FirstName,
-        LastName = @LastName
+        FirstName = ISNULL(@FirstName, FirstName),
+        LastName = ISNULL(@LastName, LastName)
     WHERE
         Id = @Id;
 

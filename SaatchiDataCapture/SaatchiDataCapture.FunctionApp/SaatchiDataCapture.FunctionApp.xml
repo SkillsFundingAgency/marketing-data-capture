@@ -276,6 +276,23 @@
             If null, then the email address has not been verified.
             </summary>
         </member>
+        <member name="P:SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody.ContactDetail.UpdateEmailVerificationCompletion">
+            <summary>
+            Gets or sets a value indicating whether or not to update
+            <see cref="P:SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody.ContactDetail.EmailVerificationCompletion" />.
+            Note: This is required, as valid values for
+            <see cref="P:SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody.ContactDetail.EmailVerificationCompletion" /> are either null (to
+            indicate that the email address has not been verified) or a
+            <see cref="T:System.DateTime" /> (when the email address was verified).
+            If <see cref="P:SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody.ContactDetail.EmailVerificationCompletion" /> is simply not
+            specified, but already has a <see cref="T:System.DateTime" /> value in the
+            database, then this value would be overwritten with null.
+            Therefore, this switch should be specified to force an update of
+            the underlying data.
+            Not set to nullable, as if not specified, this property will be
+            set to false, which is a good default behaviour to go by!
+            </summary>
+        </member>
         <member name="T:SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody.Cookie">
             <summary>
             Represents a cookie.
