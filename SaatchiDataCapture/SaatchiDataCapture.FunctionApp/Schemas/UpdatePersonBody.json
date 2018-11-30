@@ -1,12 +1,7 @@
 ﻿{
   "type": "object",
   "required": [
-    "consent",
-    "cookie",
-    "route",
-    "contactDetail",
-    "firstName",
-    "lastName"
+    "contactDetail"
   ],
   "properties": {
     "consent": {
@@ -40,6 +35,10 @@
     },
     "route": {
       "type": "object",
+      "required": [
+        "captured",
+        "routeIdentifier"
+      ],
       "properties": {
         "captured": {
           "type": "string"
@@ -60,6 +59,9 @@
         },
         "emailVerificationCompletion": {
           "type": "string"
+        },
+        "updateEmailVerificationCompletion": {
+          "type":  "boolean"
         }
       }
     },

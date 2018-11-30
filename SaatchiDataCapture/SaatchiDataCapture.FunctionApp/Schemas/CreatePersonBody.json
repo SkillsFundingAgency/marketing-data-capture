@@ -41,6 +41,10 @@
     },
     "route": {
       "type": "object",
+      "required": [
+        "captured",
+        "routeIdentifier"
+      ],
       "properties": {
         "captured": {
           "type": "string"
