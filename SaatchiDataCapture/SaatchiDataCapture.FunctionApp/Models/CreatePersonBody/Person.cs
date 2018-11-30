@@ -54,7 +54,8 @@
         /// enrolled.
         /// </summary>
         [Required]
-        public DateTime Enrolled
+        [DataType(DataType.DateTime)]
+        public DateTime? Enrolled
         {
             get;
             set;
@@ -64,6 +65,7 @@
         /// Gets or sets the first name.
         /// </summary>
         [Required]
+        [MaxLength(256)]
         public string FirstName
         {
             get;
@@ -74,6 +76,7 @@
         /// Gets or sets the last name.
         /// </summary>
         [Required]
+        [MaxLength(256)]
         public string LastName
         {
             get;

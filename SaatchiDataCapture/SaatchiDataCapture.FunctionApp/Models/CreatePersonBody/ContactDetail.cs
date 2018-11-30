@@ -12,7 +12,7 @@
         /// Gets or sets when the detail was captured.
         /// </summary>
         [Required]
-        public DateTime Captured
+        public DateTime? Captured
         {
             get;
             set;
@@ -22,6 +22,7 @@
         /// Gets or sets the email address.
         /// </summary>
         [Required]
+        [MaxLength(256)]
         public string EmailAddress
         {
             get;

@@ -12,7 +12,7 @@
         /// Gets or sets when the consent (or lack of) was declared.
         /// </summary>
         [Required]
-        public DateTime GdprConsentDeclared
+        public DateTime? GdprConsentDeclared
         {
             get;
             set;

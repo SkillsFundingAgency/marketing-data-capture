@@ -12,7 +12,7 @@
         /// Gets or sets when the cookie was captured.
         /// </summary>
         [Required]
-        public DateTime Captured
+        public DateTime? Captured
         {
             get;
             set;
@@ -22,6 +22,7 @@
         /// Gets or sets the cookie's identifier.
         /// </summary>
         [Required]
+        [MaxLength(128)]
         public string CookieIdentifier
         {
             get;

@@ -12,7 +12,7 @@
         /// Gets or sets when the route was captured.
         /// </summary>
         [Required]
-        public DateTime Captured
+        public DateTime? Captured
         {
             get;
             set;
@@ -22,6 +22,7 @@
         /// Gets or sets the route's identifier.
         /// </summary>
         [Required]
+        [MaxLength(256)]
         public string RouteIdentifier
         {
             get;

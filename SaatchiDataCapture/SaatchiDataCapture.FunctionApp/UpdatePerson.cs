@@ -37,6 +37,11 @@
             IActionResult toReturn = FunctionLogicHarness.Execute<Models.UpdatePersonBody.Person>(
                 httpRequest,
                 traceWriter,
+                (person) =>
+                {
+                    // TODO: Validate.
+                    return true;
+                },
                 (personManager, person) =>
                 {
                     HttpStatusCode httpStatusCode = PerformUpdatePerson(

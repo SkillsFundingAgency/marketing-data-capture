@@ -6,12 +6,16 @@
     using System.IO;
     using System.Linq;
     using System.Net;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs.Host;
+
     using Newtonsoft.Json;
+
     using SaatchiDataCapture.Logic.Definitions;
     using SaatchiDataCapture.Models;
+
     using StructureMap;
 
     /// <summary>
@@ -21,18 +25,22 @@
     public static class FunctionLogicHarness
     {
         /// <summary>
-        /// Performs 3 common actions for all function entry points:
+        /// Performs 6 common actions for all function entry points:
         /// 1) Initialises and creates an instance of
         ///    <see cref="IPersonManager" /> via the container, providing an
         ///    entry point to the logic library.
-        /// 2) Deserialises the request body into a <see cref="Person" />
-        ///    instance.
-        /// 3) Wraps <paramref name="serviceInvocationLogic" /> in a try catch,
+        /// 2) Deserialises the request body into a
+        ///    <typeparamref name="TRequestBody" /> instance.
+        /// 3) Validates the root of the deserialised
+        ///    <typeparamref name="TRequestBody" /> instance.
+        /// 4) Validates the rest of the <typeparamref name="TRequestBody" />
+        ///    instance via <paramref name="validateModelLogic" />.
+        /// 5) Wraps <paramref name="serviceInvocationLogic" /> in a try catch,
         ///    providing global error handling across all functions. In every
         ///    instance, if an unhandled/unexpected exception is thrown, then
         ///    a 500 will be returned, and the exception logged via the
         ///    provided <paramref name="traceWriter" />.
-        /// 4) Provides the <see cref="IActionResult" />.
+        /// 6) Provides the <see cref="IActionResult" />.
         /// </summary>
         /// <typeparam name="TRequestBody">
         /// A type deriving from <see cref="Models.ModelsBase" />.
@@ -42,6 +50,10 @@
         /// </param>
         /// <param name="traceWriter">
         /// An instance of <see cref="TraceWriter" />.
+        /// </param>
+        /// <param name="validateModelLogic">
+        /// Additional validation logic beyond the immediate route of the
+        /// provided instance of <typeparamref name="TRequestBody" />.
         /// </param>
         /// <param name="serviceInvocationLogic">
         /// The service invocation logic, accepting an instance of type
@@ -56,6 +68,7 @@
         public static IActionResult Execute<TRequestBody>(
             HttpRequest httpRequest,
             TraceWriter traceWriter,
+            Func<TRequestBody, bool> validateModelLogic,
             Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
             where TRequestBody : Models.ModelsBase
         {
@@ -64,9 +77,10 @@
             HttpStatusCode httpStatusCode;
             try
             {
-                httpStatusCode = InvokePersonManager<TRequestBody>(
+                httpStatusCode = InvokePersonManager(
                     httpRequest,
                     traceWriter,
+                    validateModelLogic,
                     serviceInvocationLogic);
             }
             catch (Exception exception)
@@ -85,37 +99,23 @@
             return toReturn;
         }
 
-        private static HttpStatusCode InvokePersonManager<TRequestBody>(
-            HttpRequest httpRequest,
-            TraceWriter traceWriter,
-            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
-            where TRequestBody : Models.ModelsBase
-        {
-            HttpStatusCode toReturn;
-
-            // Get our entry point in the logic layer and...
-            IPersonManager personManager =
-                GetIPersonManagerInstance(traceWriter);
-
-            TRequestBody requestBody = ParseRequestBody<TRequestBody>(
-                httpRequest,
-                traceWriter);
-
-            if (requestBody != null && ValidateModel(traceWriter, requestBody))
-            {
-                toReturn = serviceInvocationLogic(personManager, requestBody);
-            }
-            else
-            {
-                // If person == null, then the JSON couldn't be parsed
-                // correctly. Return a BadRequest.
-                toReturn = HttpStatusCode.BadRequest;
-            }
-
-            return toReturn;
-        }
-
-        private static bool ValidateModel<TRequestBody>(
+        /// <summary>
+        /// Validates an instance of type <typeparamref name="TRequestBody" />,
+        /// according to it's attributes.
+        /// </summary>
+        /// <typeparam name="TRequestBody">
+        /// A type deriving from <see cref="Models.ModelsBase" />.
+        /// </typeparam>
+        /// <param name="traceWriter">
+        /// An instance of <see cref="TraceWriter" />.
+        /// </param>
+        /// <param name="requestBody">
+        /// An instance of type <typeparamref name="TRequestBody" />.
+        /// </param>
+        /// <returns>
+        /// True if the instance passed validation, otherwise false.
+        /// </returns>
+        public static bool ValidateModel<TRequestBody>(
             TraceWriter traceWriter,
             TRequestBody requestBody)
             where TRequestBody : Models.ModelsBase
@@ -132,11 +132,11 @@
 
             traceWriter.Info($"Performing validation of {requestBody}...");
 
-            // TODO: We need to validate the models within this as well.
             toReturn = Validator.TryValidateObject(
                 requestBody,
                 validationContext,
-                validationResults);
+                validationResults,
+                true);
 
             if (toReturn)
             {
@@ -153,54 +153,12 @@
 
                 string validationFailuresDesc =
                     $"{validationResults.Count} validation error(s) were " +
-                    $"highlighted. These are: {validationListConcat}.";
+                    $"highlighted. These are: {validationListConcat}";
 
                 traceWriter.Warning(
                     $"{requestBody} failed validation. " +
                     $"{validationFailuresDesc}.");
             }
-
-            return toReturn;
-        }
-
-        private static string ValidationResultToString(
-            ValidationResult validationResult)
-        {
-            string toReturn = null;
-
-            string[] affectedFields = validationResult.MemberNames
-                .ToArray();
-
-            string affectedFieldsDesc = string.Join(", ", affectedFields);
-
-            toReturn =
-                $"{validationResult.ErrorMessage} ({affectedFieldsDesc})";
-
-            return toReturn;
-        }
-
-        private static IPersonManager GetIPersonManagerInstance(
-            TraceWriter traceWriter)
-        {
-            IPersonManager toReturn = null;
-
-            string path = GetAssemblyDirectory(traceWriter);
-
-            traceWriter.Info(
-                $"Pulling back an instance of {nameof(IPersonManager)}...");
-
-            Registry registry = new Registry(path);
-            Container container = new Container(registry);
-
-            IPersonManagerFactory personManagerFactory =
-                container.GetInstance<IPersonManagerFactory>();
-
-            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
-
-            toReturn = personManagerFactory.Create(loggerProvider);
-
-            traceWriter.Info(
-                $"Instance of {nameof(IPersonManager)} pulled back.");
 
             return toReturn;
         }
@@ -236,6 +194,74 @@
             return toReturn;
         }
 
+        private static IPersonManager GetIPersonManagerInstance(
+            TraceWriter traceWriter)
+        {
+            IPersonManager toReturn = null;
+
+            string path = GetAssemblyDirectory(traceWriter);
+
+            traceWriter.Info(
+                $"Pulling back an instance of {nameof(IPersonManager)}...");
+
+            Registry registry = new Registry(path);
+            Container container = new Container(registry);
+
+            IPersonManagerFactory personManagerFactory =
+                container.GetInstance<IPersonManagerFactory>();
+
+            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
+
+            toReturn = personManagerFactory.Create(loggerProvider);
+
+            traceWriter.Info(
+                $"Instance of {nameof(IPersonManager)} pulled back.");
+
+            return toReturn;
+        }
+
+        private static HttpStatusCode InvokePersonManager<TRequestBody>(
+            HttpRequest httpRequest,
+            TraceWriter traceWriter,
+            Func<TRequestBody, bool> validateModelLogic,
+            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
+            where TRequestBody : Models.ModelsBase
+        {
+            HttpStatusCode toReturn;
+
+            // Get our entry point in the logic layer and...
+            IPersonManager personManager =
+                GetIPersonManagerInstance(traceWriter);
+
+            TRequestBody requestBody = ParseRequestBody<TRequestBody>(
+                httpRequest,
+                traceWriter);
+
+            // First, if the requestBody is not null then...
+            // Validate the top level of the model then...
+            // Validate the rest via the function...
+            // If all that passes, then continue.
+            bool passedValidation =
+                requestBody != null
+                    &&
+                ValidateModel(traceWriter, requestBody)
+                    &&
+                validateModelLogic(requestBody);
+
+            if (passedValidation)
+            {
+                toReturn = serviceInvocationLogic(personManager, requestBody);
+            }
+            else
+            {
+                // If person == null, then the JSON couldn't be parsed
+                // correctly. Return a BadRequest.
+                toReturn = HttpStatusCode.BadRequest;
+            }
+
+            return toReturn;
+        }
+
         private static TRequestBody ParseRequestBody<TRequestBody>(
             HttpRequest httpRequest,
             TraceWriter traceWriter)
@@ -264,11 +290,29 @@
 
                 traceWriter.Info($"Parsed: {toReturn}.");
             }
-            catch (JsonReaderException)
+            catch (JsonReaderException jsonReaderException)
             {
-                // Do nothing - this method will return null if the JSON is
-                // badly formed.
+                traceWriter.Warning(
+                    $"A {nameof(JsonReaderException)} was thrown when " +
+                    $"deserialising the request body \"{requestBody}\". The " +
+                    $"exception message: \"{jsonReaderException.Message}\".");
             }
+
+            return toReturn;
+        }
+
+        private static string ValidationResultToString(
+            ValidationResult validationResult)
+        {
+            string toReturn = null;
+
+            string[] affectedFields = validationResult.MemberNames
+                .ToArray();
+
+            string affectedFieldsDesc = string.Join(", ", affectedFields);
+
+            toReturn =
+                $"{validationResult.ErrorMessage} ({affectedFieldsDesc})";
 
             return toReturn;
         }

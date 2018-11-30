@@ -37,6 +37,14 @@ namespace SaatchiDataCapture.FunctionApp
             IActionResult toReturn = FunctionLogicHarness.Execute<Models.CreatePersonBody.Person>(
                 httpRequest,
                 traceWriter,
+                (person) =>
+                {
+                    bool passedValidation = PerformPersonValidation(
+                        traceWriter,
+                        person);
+
+                    return passedValidation;
+                },
                 (personManager, person) =>
                 {
                     HttpStatusCode httpStatusCode = PerformCreatePerson(
@@ -48,6 +56,45 @@ namespace SaatchiDataCapture.FunctionApp
                 });
 
             return toReturn;
+        }
+
+        private static bool PerformPersonValidation(
+            TraceWriter traceWriter,
+            Models.CreatePersonBody.Person person)
+        {
+            bool passedValidation = true;
+
+            // The top level is validated for free.
+            // If the top level passed, now validate the sub-properties.
+            if (passedValidation)
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Consent);
+            }
+
+            if (passedValidation)
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.ContactDetail);
+            }
+
+            if (passedValidation)
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Cookie);
+            }
+
+            if (passedValidation)
+            {
+                passedValidation = FunctionLogicHarness.ValidateModel(
+                    traceWriter,
+                    person.Route);
+            }
+
+            return passedValidation;
         }
 
         private static HttpStatusCode PerformCreatePerson(
@@ -68,7 +115,7 @@ namespace SaatchiDataCapture.FunctionApp
                 {
                     Consent = new Consent()
                     {
-                        GdprConsentDeclared = createPerson.Consent.GdprConsentDeclared,
+                        GdprConsentDeclared = createPerson.Consent.GdprConsentDeclared.Value,
                         GdprConsentGiven = createPerson.Consent.GdprConsentGiven,
                     },
                     ContactDetail = new ContactDetail()
@@ -79,12 +126,12 @@ namespace SaatchiDataCapture.FunctionApp
                     },
                     Cookie = new SaatchiDataCapture.Models.Cookie()
                     {
-                        Captured = createPerson.Cookie.Captured,
+                        Captured = createPerson.Cookie.Captured.Value,
                         CookieIdentifier = createPerson.Cookie.CookieIdentifier,
                     },
                     Route = new Route()
                     {
-                        Captured = createPerson.Route.Captured,
+                        Captured = createPerson.Route.Captured.Value,
                         RouteIdentifier = createPerson.Route.RouteIdentifier,
                     },
                     Enrolled = createPerson.Enrolled,
