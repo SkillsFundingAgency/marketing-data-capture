@@ -1,4 +1,4 @@
-namespace SaatchiDataCapture.FunctionApp
+namespace SaatchiDataCapture.FunctionApp.Functions
 {
     using System.Net;
     using Microsoft.AspNetCore.Http;

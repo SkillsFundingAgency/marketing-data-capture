@@ -166,7 +166,8 @@
             // will be a path to a directory, not the location of the file.
             // Locally, this translates to a file.
             // Thus the craziness below.
-            string assemblyLocation = typeof(CreatePerson).Assembly.Location;
+            string assemblyLocation =
+                typeof(FunctionLogicHarness).Assembly.Location;
 
             FileAttributes attr = File.GetAttributes(assemblyLocation);
 
