@@ -75,8 +75,8 @@
             if (readPersonResult != null)
             {
                 this.loggerProvider.Info(
-                    $"\"{emailAddress}\" exists. Going ahead with " +
-                    $"update of {person}.");
+                    $"\"{emailAddress}\" exists. Going ahead with update " +
+                    $"of {person}.");
 
                 this.UpdatePersonInDatabase(
                     person,
@@ -97,9 +97,9 @@
         {
             ReadPersonResult toReturn = null;
 
-            this.loggerProvider.Info(
-                $"Checking for existing ContactDetail record using " +
-                $"email address \"{emailAddress}\"...");
+            this.loggerProvider.Debug(
+                $"Checking for existing {nameof(ContactDetail)} record " +
+                $"using email address \"{emailAddress}\"...");
 
             toReturn = this.dataCaptureDatabaseAdapter.ReadPerson(
                 emailAddress);
@@ -110,7 +110,7 @@
         private void InsertRecordsIntoDatabase(Person person)
         {
             // 1) Person
-            this.loggerProvider.Info(
+            this.loggerProvider.Debug(
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreatePerson)}...");
 
@@ -128,7 +128,7 @@
 
             // Now we have an id for Person, insert into the satellite tables.
             // 2) ContactDetail
-            this.loggerProvider.Info(
+            this.loggerProvider.Debug(
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateContactDetail)}...");
 
@@ -157,7 +157,7 @@
             if (person.Consent != null)
             {
                 // 3) Consent
-                this.loggerProvider.Info(
+                this.loggerProvider.Debug(
                     $"Invoking " +
                     $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateConsent)}...");
 
@@ -174,7 +174,7 @@
             if (person.Cookie != null)
             {
                 // 4) Cookie
-                this.loggerProvider.Info(
+                this.loggerProvider.Debug(
                     $"Invoking " +
                     $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateCookie)}...");
 
@@ -191,7 +191,7 @@
             if (person.Route != null)
             {
                 // 5) Route
-                this.loggerProvider.Info(
+                this.loggerProvider.Debug(
                     $"Invoking " +
                     $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.CreateRoute)}...");
 
@@ -217,7 +217,7 @@
             this.InsertIntoOneToManyTables(personId, person);
 
             // Then update the Person and ContactDetail tables.
-            this.loggerProvider.Info(
+            this.loggerProvider.Debug(
                 $"Invoking " +
                 $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdatePerson)} " +
                 $"with id {personId}...");
@@ -234,7 +234,7 @@
             {
                 long contactDetailId = readContactDetailResult.ContactDetail_Id;
 
-                this.loggerProvider.Info(
+                this.loggerProvider.Debug(
                     $"Invoking " +
                     $"{nameof(IDataCaptureDatabaseAdapter)}.{nameof(IDataCaptureDatabaseAdapter.UpdateContactDetail)} " +
                     $"with id {contactDetailId}...");
