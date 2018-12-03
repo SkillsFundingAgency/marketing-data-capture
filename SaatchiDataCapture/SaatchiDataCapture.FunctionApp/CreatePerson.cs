@@ -30,7 +30,7 @@ namespace SaatchiDataCapture.FunctionApp
         /// </returns>
         [FunctionName("create-person")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = null)]
+            [HttpTrigger(AuthorizationLevel.System, "POST", Route = null)]
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
