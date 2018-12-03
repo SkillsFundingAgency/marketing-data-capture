@@ -34,32 +34,21 @@ namespace SaatchiDataCapture.FunctionApp
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute<Models.CreatePersonBody.Person>(
+            IActionResult toReturn = null;
+
+            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
+
+            toReturn = FunctionLogicHarness.Execute<Models.CreatePersonBody.Person>(
                 httpRequest,
-                traceWriter,
-                (person) =>
-                {
-                    bool passedValidation = PerformPersonValidation(
-                        traceWriter,
-                        person);
-
-                    return passedValidation;
-                },
-                (personManager, person) =>
-                {
-                    HttpStatusCode httpStatusCode = PerformCreatePerson(
-                        traceWriter,
-                        personManager,
-                        person);
-
-                    return httpStatusCode;
-                });
+                loggerProvider,
+                PerformPersonValidation,
+                PerformCreatePerson);
 
             return toReturn;
         }
 
         private static bool PerformPersonValidation(
-            TraceWriter traceWriter,
+            ILoggerProvider loggerProvider,
             Models.CreatePersonBody.Person person)
         {
             bool passedValidation = true;
@@ -69,28 +58,28 @@ namespace SaatchiDataCapture.FunctionApp
             if (passedValidation)
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Consent);
             }
 
             if (passedValidation)
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.ContactDetail);
             }
 
             if (passedValidation)
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Cookie);
             }
 
             if (passedValidation)
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Route);
             }
 
@@ -98,13 +87,13 @@ namespace SaatchiDataCapture.FunctionApp
         }
 
         private static HttpStatusCode PerformCreatePerson(
-            TraceWriter traceWriter,
+            ILoggerProvider loggerProvider,
             IPersonManager personManager,
             Models.CreatePersonBody.Person createPerson)
         {
             HttpStatusCode toReturn;
 
-            traceWriter.Info(
+            loggerProvider.Debug(
                 $"Invoking " +
                 $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)}...");
 
@@ -141,7 +130,7 @@ namespace SaatchiDataCapture.FunctionApp
 
                 personManager.Create(person);
 
-                traceWriter.Info(
+                loggerProvider.Info(
                     $"{nameof(IPersonManager)}.{nameof(IPersonManager.Create)} " +
                     $"invoked with success.");
 

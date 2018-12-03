@@ -34,32 +34,21 @@
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
-            IActionResult toReturn = FunctionLogicHarness.Execute<Models.UpdatePersonBody.Person>(
+            IActionResult toReturn = null;
+
+            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
+
+            toReturn = FunctionLogicHarness.Execute<Models.UpdatePersonBody.Person>(
                 httpRequest,
-                traceWriter,
-                (person) =>
-                {
-                    bool passedValidation = PerformPersonValidation(
-                        traceWriter,
-                        person);
-
-                    return passedValidation;
-                },
-                (personManager, person) =>
-                {
-                    HttpStatusCode httpStatusCode = PerformUpdatePerson(
-                        traceWriter,
-                        personManager,
-                        person);
-
-                    return httpStatusCode;
-                });
+                new LoggerProvider(traceWriter),
+                PerformPersonValidation,
+                PerformUpdatePerson);
 
             return toReturn;
         }
 
         private static bool PerformPersonValidation(
-            TraceWriter traceWriter,
+            ILoggerProvider loggerProvider,
             Models.UpdatePersonBody.Person person)
         {
             bool passedValidation = true;
@@ -69,7 +58,7 @@
             if (passedValidation && (person.Consent != null))
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Consent);
             }
 
@@ -79,21 +68,21 @@
             if (passedValidation)
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.ContactDetail);
             }
 
             if (passedValidation && (person.Cookie != null))
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Cookie);
             }
 
             if (passedValidation && (person.Cookie != null))
             {
                 passedValidation = FunctionLogicHarness.ValidateModel(
-                    traceWriter,
+                    loggerProvider,
                     person.Route);
             }
 
@@ -101,13 +90,13 @@
         }
 
         private static HttpStatusCode PerformUpdatePerson(
-            TraceWriter traceWriter,
+            ILoggerProvider loggerProvider,
             IPersonManager personManager,
             Models.UpdatePersonBody.Person updatePerson)
         {
             HttpStatusCode toReturn;
 
-            traceWriter.Info(
+            loggerProvider.Debug(
                 $"Invoking " +
                 $"{nameof(IPersonManager)}.{nameof(IPersonManager.Update)}...");
 
@@ -176,7 +165,7 @@
                     person,
                     updatePerson.ContactDetail.UpdateEmailVerificationCompletion);
 
-                traceWriter.Info(
+                loggerProvider.Info(
                     $"{nameof(IPersonManager)}.{nameof(IPersonManager.Update)} " +
                     $"invoked with success.");
 

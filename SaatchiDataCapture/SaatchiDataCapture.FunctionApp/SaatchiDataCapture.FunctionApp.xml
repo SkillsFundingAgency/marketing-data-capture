@@ -37,7 +37,7 @@
             for all functions.
             </summary>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.Execute``1(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Azure.WebJobs.Host.TraceWriter,System.Func{``0,System.Boolean},System.Func{SaatchiDataCapture.Logic.Definitions.IPersonManager,``0,System.Net.HttpStatusCode})">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.Execute``1(Microsoft.AspNetCore.Http.HttpRequest,SaatchiDataCapture.Logic.Definitions.ILoggerProvider,System.Func{SaatchiDataCapture.Logic.Definitions.ILoggerProvider,``0,System.Boolean},System.Func{SaatchiDataCapture.Logic.Definitions.ILoggerProvider,SaatchiDataCapture.Logic.Definitions.IPersonManager,``0,System.Net.HttpStatusCode})">
             <summary>
             Performs 6 common actions for all function entry points:
             1) Initialises and creates an instance of
@@ -53,7 +53,7 @@
                providing global error handling across all functions. In every
                instance, if an unhandled/unexpected exception is thrown, then
                a 500 will be returned, and the exception logged via the
-               provided <paramref name="traceWriter" />.
+               provided <paramref name="loggerProvider" />.
             6) Provides the <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
             </summary>
             <typeparam name="TRequestBody">
@@ -62,8 +62,8 @@
             <param name="httpRequest">
             An instance of <see cref="T:Microsoft.AspNetCore.Http.HttpRequest" />.
             </param>
-            <param name="traceWriter">
-            An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
+            <param name="loggerProvider">
+            An instance of type <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
             </param>
             <param name="validateModelLogic">
             Additional validation logic beyond the immediate route of the
@@ -80,7 +80,7 @@
             An instance of <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
             </returns>
         </member>
-        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.ValidateModel``1(Microsoft.Azure.WebJobs.Host.TraceWriter,``0)">
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.FunctionLogicHarness.ValidateModel``1(SaatchiDataCapture.Logic.Definitions.ILoggerProvider,``0)">
             <summary>
             Validates an instance of type <typeparamref name="TRequestBody" />,
             according to it's attributes.
@@ -88,8 +88,8 @@
             <typeparam name="TRequestBody">
             A type deriving from <see cref="T:SaatchiDataCapture.FunctionApp.Models.ModelsBase" />.
             </typeparam>
-            <param name="traceWriter">
-            An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
+            <param name="loggerProvider">
+            An instance of <see cref="T:SaatchiDataCapture.Logic.Definitions.ILoggerProvider" />.
             </param>
             <param name="requestBody">
             An instance of type <typeparamref name="TRequestBody" />.
@@ -112,7 +112,16 @@
             An instance of <see cref="T:Microsoft.Azure.WebJobs.Host.TraceWriter" />.
             </param>
         </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Debug(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Info(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Warning(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:SaatchiDataCapture.FunctionApp.Infrastructure.LoggerProvider.Error(System.String,System.Exception)">
             <inheritdoc />
         </member>
         <member name="T:SaatchiDataCapture.FunctionApp.Infrastructure.Registry">

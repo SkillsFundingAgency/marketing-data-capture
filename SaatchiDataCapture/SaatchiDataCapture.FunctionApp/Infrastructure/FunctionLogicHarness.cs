@@ -6,16 +6,10 @@
     using System.IO;
     using System.Linq;
     using System.Net;
-
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Azure.WebJobs.Host;
-
     using Newtonsoft.Json;
-
     using SaatchiDataCapture.Logic.Definitions;
-    using SaatchiDataCapture.Models;
-
     using StructureMap;
 
     /// <summary>
@@ -39,7 +33,7 @@
         ///    providing global error handling across all functions. In every
         ///    instance, if an unhandled/unexpected exception is thrown, then
         ///    a 500 will be returned, and the exception logged via the
-        ///    provided <paramref name="traceWriter" />.
+        ///    provided <paramref name="loggerProvider" />.
         /// 6) Provides the <see cref="IActionResult" />.
         /// </summary>
         /// <typeparam name="TRequestBody">
@@ -48,8 +42,8 @@
         /// <param name="httpRequest">
         /// An instance of <see cref="HttpRequest" />.
         /// </param>
-        /// <param name="traceWriter">
-        /// An instance of <see cref="TraceWriter" />.
+        /// <param name="loggerProvider">
+        /// An instance of type <see cref="ILoggerProvider" />.
         /// </param>
         /// <param name="validateModelLogic">
         /// Additional validation logic beyond the immediate route of the
@@ -67,9 +61,9 @@
         /// </returns>
         public static IActionResult Execute<TRequestBody>(
             HttpRequest httpRequest,
-            TraceWriter traceWriter,
-            Func<TRequestBody, bool> validateModelLogic,
-            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
+            ILoggerProvider loggerProvider,
+            Func<ILoggerProvider, TRequestBody, bool> validateModelLogic,
+            Func<ILoggerProvider, IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
             where TRequestBody : Models.ModelsBase
         {
             IActionResult toReturn = null;
@@ -79,13 +73,13 @@
             {
                 httpStatusCode = InvokePersonManager(
                     httpRequest,
-                    traceWriter,
+                    loggerProvider,
                     validateModelLogic,
                     serviceInvocationLogic);
             }
             catch (Exception exception)
             {
-                traceWriter.Error(
+                loggerProvider.Error(
                     "An unhandled exception was thrown.",
                     exception);
 
@@ -94,7 +88,7 @@
 
             toReturn = new StatusCodeResult((int)httpStatusCode);
 
-            traceWriter.Info($"Returning {httpStatusCode}.");
+            loggerProvider.Info($"Returning {httpStatusCode}.");
 
             return toReturn;
         }
@@ -106,8 +100,8 @@
         /// <typeparam name="TRequestBody">
         /// A type deriving from <see cref="Models.ModelsBase" />.
         /// </typeparam>
-        /// <param name="traceWriter">
-        /// An instance of <see cref="TraceWriter" />.
+        /// <param name="loggerProvider">
+        /// An instance of <see cref="ILoggerProvider" />.
         /// </param>
         /// <param name="requestBody">
         /// An instance of type <typeparamref name="TRequestBody" />.
@@ -116,7 +110,7 @@
         /// True if the instance passed validation, otherwise false.
         /// </returns>
         public static bool ValidateModel<TRequestBody>(
-            TraceWriter traceWriter,
+            ILoggerProvider loggerProvider,
             TRequestBody requestBody)
             where TRequestBody : Models.ModelsBase
         {
@@ -130,7 +124,7 @@
             List<ValidationResult> validationResults =
                 new List<ValidationResult>();
 
-            traceWriter.Info($"Performing validation of {requestBody}...");
+            loggerProvider.Debug($"Performing validation of {requestBody}...");
 
             toReturn = Validator.TryValidateObject(
                 requestBody,
@@ -140,7 +134,7 @@
 
             if (toReturn)
             {
-                traceWriter.Info($"{requestBody} passed validation!");
+                loggerProvider.Info($"{requestBody} passed validation!");
             }
             else
             {
@@ -155,7 +149,7 @@
                     $"{validationResults.Count} validation error(s) were " +
                     $"highlighted. These are: {validationListConcat}";
 
-                traceWriter.Warning(
+                loggerProvider.Warning(
                     $"{requestBody} failed validation. " +
                     $"{validationFailuresDesc}.");
             }
@@ -163,7 +157,8 @@
             return toReturn;
         }
 
-        private static string GetAssemblyDirectory(TraceWriter traceWriter)
+        private static string GetAssemblyDirectory(
+            ILoggerProvider loggerProvider)
         {
             string toReturn = null;
 
@@ -189,19 +184,19 @@
 
             toReturn = executionDirectory.FullName;
 
-            traceWriter.Info($"Execution location: {toReturn}.");
+            loggerProvider.Debug($"Execution location: {toReturn}.");
 
             return toReturn;
         }
 
         private static IPersonManager GetIPersonManagerInstance(
-            TraceWriter traceWriter)
+            ILoggerProvider loggerProvider)
         {
             IPersonManager toReturn = null;
 
-            string path = GetAssemblyDirectory(traceWriter);
+            string path = GetAssemblyDirectory(loggerProvider);
 
-            traceWriter.Info(
+            loggerProvider.Debug(
                 $"Pulling back an instance of {nameof(IPersonManager)}...");
 
             Registry registry = new Registry(path);
@@ -210,11 +205,9 @@
             IPersonManagerFactory personManagerFactory =
                 container.GetInstance<IPersonManagerFactory>();
 
-            LoggerProvider loggerProvider = new LoggerProvider(traceWriter);
-
             toReturn = personManagerFactory.Create(loggerProvider);
 
-            traceWriter.Info(
+            loggerProvider.Info(
                 $"Instance of {nameof(IPersonManager)} pulled back.");
 
             return toReturn;
@@ -222,20 +215,20 @@
 
         private static HttpStatusCode InvokePersonManager<TRequestBody>(
             HttpRequest httpRequest,
-            TraceWriter traceWriter,
-            Func<TRequestBody, bool> validateModelLogic,
-            Func<IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
+            ILoggerProvider loggerProvider,
+            Func<ILoggerProvider, TRequestBody, bool> validateModelLogic,
+            Func<ILoggerProvider, IPersonManager, TRequestBody, HttpStatusCode> serviceInvocationLogic)
             where TRequestBody : Models.ModelsBase
         {
             HttpStatusCode toReturn;
 
             // Get our entry point in the logic layer and...
             IPersonManager personManager =
-                GetIPersonManagerInstance(traceWriter);
+                GetIPersonManagerInstance(loggerProvider);
 
             TRequestBody requestBody = ParseRequestBody<TRequestBody>(
                 httpRequest,
-                traceWriter);
+                loggerProvider);
 
             // First, if the requestBody is not null then...
             // Validate the top level of the model then...
@@ -244,13 +237,16 @@
             bool passedValidation =
                 requestBody != null
                     &&
-                ValidateModel(traceWriter, requestBody)
+                ValidateModel(loggerProvider, requestBody)
                     &&
-                validateModelLogic(requestBody);
+                validateModelLogic(loggerProvider, requestBody);
 
             if (passedValidation)
             {
-                toReturn = serviceInvocationLogic(personManager, requestBody);
+                toReturn = serviceInvocationLogic(
+                    loggerProvider,
+                    personManager,
+                    requestBody);
             }
             else
             {
@@ -264,14 +260,14 @@
 
         private static TRequestBody ParseRequestBody<TRequestBody>(
             HttpRequest httpRequest,
-            TraceWriter traceWriter)
+            ILoggerProvider loggerProvider)
             where TRequestBody : Models.ModelsBase
         {
             TRequestBody toReturn = null;
 
             Type requestBodyType = typeof(TRequestBody);
 
-            traceWriter.Info("Reading the request body...");
+            loggerProvider.Debug("Reading the request body...");
 
             string requestBody = null;
             using (StreamReader streamReader = new StreamReader(httpRequest.Body))
@@ -279,7 +275,7 @@
                 requestBody = streamReader.ReadToEnd();
             }
 
-            traceWriter.Info(
+            loggerProvider.Debug(
                 $"Request body: \"{requestBody}\". Parsing body into " +
                 $"{requestBodyType.Name} instance...");
 
@@ -288,11 +284,11 @@
                 toReturn = JsonConvert.DeserializeObject<TRequestBody>(
                     requestBody);
 
-                traceWriter.Info($"Parsed: {toReturn}.");
+                loggerProvider.Info($"Parsed: {toReturn}.");
             }
             catch (JsonReaderException jsonReaderException)
             {
-                traceWriter.Warning(
+                loggerProvider.Warning(
                     $"A {nameof(JsonReaderException)} was thrown when " +
                     $"deserialising the request body \"{requestBody}\". The " +
                     $"exception message: \"{jsonReaderException.Message}\".");

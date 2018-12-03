@@ -24,9 +24,27 @@
         }
 
         /// <inheritdoc />
+        public void Debug(string message)
+        {
+            this.traceWriter.Verbose(message);
+        }
+
+        /// <inheritdoc />
         public void Info(string message)
         {
             this.traceWriter.Info(message);
+        }
+
+        /// <inheritdoc />
+        public void Warning(string message)
+        {
+            this.traceWriter.Warning(message);
+        }
+
+        /// <inheritdoc />
+        public void Error(string message, Exception exception)
+        {
+            this.traceWriter.Error(message, exception);
         }
     }
 }

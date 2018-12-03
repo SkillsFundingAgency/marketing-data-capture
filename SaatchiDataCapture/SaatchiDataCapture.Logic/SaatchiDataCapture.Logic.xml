@@ -9,12 +9,39 @@
             Describes the operations of the logger provider.
             </summary>
         </member>
+        <member name="M:SaatchiDataCapture.Logic.Definitions.ILoggerProvider.Debug(System.String)">
+            <summary>
+            Logs a <paramref name="message" /> with debug-level importance.
+            </summary>
+            <param name="message">
+            The message to log.
+            </param>
+        </member>
         <member name="M:SaatchiDataCapture.Logic.Definitions.ILoggerProvider.Info(System.String)">
             <summary>
             Logs a <paramref name="message" /> with info-level importance.
             </summary>
             <param name="message">
             The message to log.
+            </param>
+        </member>
+        <member name="M:SaatchiDataCapture.Logic.Definitions.ILoggerProvider.Warning(System.String)">
+            <summary>
+            Logs a <paramref name="message" /> with warning-level importance.
+            </summary>
+            <param name="message">
+            The message to log.
+            </param>
+        </member>
+        <member name="M:SaatchiDataCapture.Logic.Definitions.ILoggerProvider.Error(System.String,System.Exception)">
+            <summary>
+            Logs a <paramref name="message" /> and an <see cref="T:System.Exception" />
+            </summary>
+            <param name="message">
+            The message to log.
+            </param>
+            <param name="exception">
+            The <see cref="T:System.Exception" /> to log.
             </param>
         </member>
         <member name="T:SaatchiDataCapture.Logic.Definitions.IPersonManager">

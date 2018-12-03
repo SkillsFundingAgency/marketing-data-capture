@@ -1,11 +1,21 @@
-﻿// TODO: Log other types of error message? e.g. Debug?
-namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace SaatchiDataCapture.Logic.Definitions
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Describes the operations of the logger provider.
     /// </summary>
     public interface ILoggerProvider
     {
+        /// <summary>
+        /// Logs a <paramref name="message" /> with debug-level importance.
+        /// </summary>
+        /// <param name="message">
+        /// The message to log.
+        /// </param>
+        void Debug(string message);
+
         /// <summary>
         /// Logs a <paramref name="message" /> with info-level importance.
         /// </summary>
@@ -13,5 +23,28 @@ namespace SaatchiDataCapture.Logic.Definitions
         /// The message to log.
         /// </param>
         void Info(string message);
+
+        /// <summary>
+        /// Logs a <paramref name="message" /> with warning-level importance.
+        /// </summary>
+        /// <param name="message">
+        /// The message to log.
+        /// </param>
+        void Warning(string message);
+
+        /// <summary>
+        /// Logs a <paramref name="message" /> and an <see cref="Exception" />
+        /// </summary>
+        /// <param name="message">
+        /// The message to log.
+        /// </param>
+        /// <param name="exception">
+        /// The <see cref="Exception" /> to log.
+        /// </param>
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1716",
+            Justification = "Naming logging functions after the level itself is an accepted standard.")]
+        void Error(string message, Exception exception);
     }
 }
