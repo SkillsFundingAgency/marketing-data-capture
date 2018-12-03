@@ -30,7 +30,7 @@
         /// </returns>
         [FunctionName("update-person")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.System, "POST", Route = null)]
+            [HttpTrigger(AuthorizationLevel.Function, "POST", Route = null)]
             HttpRequest httpRequest,
             TraceWriter traceWriter)
         {
