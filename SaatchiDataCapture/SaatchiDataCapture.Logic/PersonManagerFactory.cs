@@ -1,11 +1,13 @@
 ﻿namespace SaatchiDataCapture.Logic
 {
+    using System.Diagnostics.CodeAnalysis;
     using SaatchiDataCapture.Data.Definitions;
     using SaatchiDataCapture.Logic.Definitions;
 
     /// <summary>
     /// Implements <see cref="IPersonManagerFactory" />.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class PersonManagerFactory : IPersonManagerFactory
     {
         private readonly IDataCaptureDatabaseAdapter dataCaptureDatabaseAdapter;

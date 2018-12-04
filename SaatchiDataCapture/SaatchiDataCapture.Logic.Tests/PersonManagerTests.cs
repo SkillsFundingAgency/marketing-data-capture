@@ -1,6 +1,7 @@
 namespace SaatchiDataCapture.Logic.Tests
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using SaatchiDataCapture.Data.Definitions;
@@ -9,6 +10,7 @@ namespace SaatchiDataCapture.Logic.Tests
     using SaatchiDataCapture.Models;
 
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class PersonManagerTests
     {
         [TestMethod]
