@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaatchiDataCapture.Logic", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaatchiDataCapture.Data", "SaatchiDataCapture.Data\SaatchiDataCapture.Data.csproj", "{F6C63241-E1C6-4EEE-BD60-23F19D0B2315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaatchiDataCapture.Models", "SaatchiDataCapture.Models\SaatchiDataCapture.Models.csproj", "{4755F439-57F6-4C96-8121-4A0AB3DD801E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaatchiDataCapture.Models", "SaatchiDataCapture.Models\SaatchiDataCapture.Models.csproj", "{4755F439-57F6-4C96-8121-4A0AB3DD801E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaatchiDataCapture.Common", "SaatchiDataCapture.Common\SaatchiDataCapture.Common.csproj", "{44C440E4-BC5F-4F57-9D52-1F086665DFC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaatchiDataCapture.Common", "SaatchiDataCapture.Common\SaatchiDataCapture.Common.csproj", "{44C440E4-BC5F-4F57-9D52-1F086665DFC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaatchiDataCapture.Logic.Tests", "SaatchiDataCapture.Logic.Tests\SaatchiDataCapture.Logic.Tests.csproj", "{0084AD6B-4DA5-4F89-BF38-0CDDD5803049}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{44C440E4-BC5F-4F57-9D52-1F086665DFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44C440E4-BC5F-4F57-9D52-1F086665DFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44C440E4-BC5F-4F57-9D52-1F086665DFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0084AD6B-4DA5-4F89-BF38-0CDDD5803049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0084AD6B-4DA5-4F89-BF38-0CDDD5803049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0084AD6B-4DA5-4F89-BF38-0CDDD5803049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0084AD6B-4DA5-4F89-BF38-0CDDD5803049}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

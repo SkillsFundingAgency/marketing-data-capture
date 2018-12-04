@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Microsoft -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" PrivateAssets="All" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" PrivateAssets="All" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" PrivateAssets="All" />
+    
+    <!-- Other -->
+    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
+    <PackageReference Include="Moq" Version="4.10.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.csproj" />
+  </ItemGroup>
+
+</Project>

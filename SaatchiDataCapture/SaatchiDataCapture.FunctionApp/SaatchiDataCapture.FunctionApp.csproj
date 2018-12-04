@@ -48,5 +48,10 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Required in both test/product projects. This is a temporary workaround for https://github.com/Microsoft/vstest/issues/800 -->
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
   
 </Project>

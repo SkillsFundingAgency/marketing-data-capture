@@ -32,4 +32,9 @@
     <DocumentationFile>C:\Repos\saatchi\SaatchiDataCapture\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Required in both test/product projects. This is a temporary workaround for https://github.com/Microsoft/vstest/issues/800 -->
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
 </Project>
