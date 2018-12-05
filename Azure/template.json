@@ -1,0 +1,375 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the storage account"
+            }
+        },
+        "accessTier": {
+            "type": "string",
+            "defaultValue": "",
+            "allowedValues": [
+                "Hot",
+                "Cool",
+                ""
+            ],
+            "metadata": {
+                "description": "This setting is required if using BlobStorage as the storageKind, otherwise can be left blank"
+            }
+        },
+        "storageKind": {
+            "type": "string",
+            "defaultValue": "Storage",
+            "allowedValues": [
+                "Storage",
+                "StorageV2",
+                "BlobStorage"
+            ]
+        },
+        "keyVaultName": {
+            "type": "string"
+        },
+        "servicePrincipalObjectId": {
+            "type": "string"
+        },
+        "secretName": {
+            "type": "string"
+        },
+        "secretValue": {
+            "type": "string"
+        },
+        "appServicePlanName": {
+            "type": "string"
+        },
+        "aspSize": {
+            "type": "string",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "aspInstances": {
+            "type": "int"
+        },
+        "functionAppName": {
+            "type": "string"
+        },
+        "appServicePlanResourceGroup": {
+            "type": "string"
+        },
+        "functionAppAppSettings": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "functionAppConnectionStrings": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "sqlServerName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Azure SQL Server  instance"
+            }
+        },
+        "sqlServerAdminUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "The Azure SQL Server Administrator (SA) username "
+            }
+        },
+        "sqlServerAdminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The Azure SQL Server Administrator (SA) password"
+            }
+        },
+        "sqlServerActiveDirectoryAdminLogin": {
+            "type": "string",
+            "metadata": {
+                "description": "The active directory admin that will be assigned to the SQL server"
+            }
+        },
+        "sqlServerActiveDirectoryAdminObjectId": {
+            "type": "string",
+            "metadata": {
+                "description": "The object id of the active directory admin that will be assigned to the SQL server"
+            }
+        },
+        "threatDetectionEmailAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The email address that threat alerts will be sent to"
+            }
+        },
+        "sqlStorageAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the shared storage account for the environment"
+            }
+        },
+        "databaseName": {
+            "type": "string"
+        },
+        "databaseSkuName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "databaseSizeBytes": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "databaseTier": {
+            "type": "string",
+            "defaultValue": "",
+            "allowedValues": [
+                "",
+                "Basic",
+                "Standard",
+                "Premium"
+            ]
+        },
+        "dataMaskingExemptPrincipals": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Semi-colon separated list of database principals who are exempt from the following data masking rules"
+            }
+        },
+        "dataMaskingRules": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "Object array where object is of type DataMaskingRuleProperties: https://docs.microsoft.com/en-us/azure/templates/microsoft.sql/servers/databases/datamaskingpolicies/rules#DataMaskingRuleProperties"
+            }
+        },
+        "diagnosticsRetentionDays": {
+            "type": "int",
+            "defaultValue": 0,
+            "minValue": 0,
+            "maxValue": 365,
+            "metadata": {
+                "descrtiption": "The number of days that diagnostic logs will be stored for. Default value is forever, max is 1 year."
+            }
+        },
+        "logAnalyticsSubscriptionId": {
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]",
+            "metadata": {
+                "description": "The id of the subscription for the Log Analytics Workspace. This defaults to the current subscription."
+            }
+        },
+        "logAnalyticsResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group of the Log Analytics Workspace."
+            }
+        },
+        "logAnalyticsWorkspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Log Analytics Workspace."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "storage-account-arm",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/storage-account-arm.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {
+                        "value": "[parameters('storageAccountName')]"
+                    },
+                    "accessTier": {
+                        "value": "[parameters('accessTier')]"
+                    },
+                    "storageKind": {
+                        "value": "[parameters('storageKind')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "keyvault",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/keyvault.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "servicePrincipalObjectId": {
+                        "value": "[parameters('servicePrincipalObjectId')]"
+                    },
+                    "secretName": {
+                        "value": "[parameters('secretName')]"
+                    },
+                    "secretValue": {
+                        "value": "[parameters('secretValue')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "app-service-plan",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/app-service-plan.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServicePlanName": {
+                        "value": "[parameters('appServicePlanName')]"
+                    },
+                    "aspSize": {
+                        "value": "[parameters('aspSize')]"
+                    },
+                    "aspInstances": {
+                        "value": "[parameters('aspInstances')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "function-app",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/function-app.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "functionAppName": {
+                        "value": "[parameters('functionAppName')]"
+                    },
+                    "appServicePlanName": {
+                        "value": "[parameters('appServicePlanName')]"
+                    },
+                    "appServicePlanResourceGroup": {
+                        "value": "[parameters('appServicePlanResourceGroup')]"
+                    },
+                    "functionAppAppSettings": {
+                        "value": "[parameters('functionAppAppSettings')]"
+                    },
+                    "functionAppConnectionStrings": {
+                        "value": "[parameters('functionAppConnectionStrings')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "app-service-plan"
+            ]
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "sql-server",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/sql-server.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlServerName": {
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    "sqlServerAdminUsername": {
+                        "value": "[parameters('sqlServerAdminUsername')]"
+                    },
+                    "sqlServerAdminPassword": {
+                        "value": "[parameters('sqlServerAdminPassword')]"
+                    },
+                    "sqlServerActiveDirectoryAdminLogin": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminLogin')]"
+                    },
+                    "sqlServerActiveDirectoryAdminObjectId": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminObjectId')]"
+                    },
+                    "threatDetectionEmailAddress": {
+                        "value": "[parameters('threatDetectionEmailAddress')]"
+                    },
+                    "sqlStorageAccountName": {
+                        "value": "[parameters('sqlStorageAccountName')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "sql-database",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/sql-database.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[parameters('databaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('databaseSkuName')]"
+                    },
+                    "databaseSizeBytes": {
+                        "value": "[parameters('databaseSizeBytes')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('databaseTier')]"
+                    },
+                    "dataMaskingExemptPrincipals": {
+                        "value": "[parameters('dataMaskingExemptPrincipals')]"
+                    },
+                    "dataMaskingRules": {
+                        "value": "[parameters('dataMaskingRules')]"
+                    },
+                    "diagnosticsRetentionDays": {
+                        "value": "[parameters('diagnosticsRetentionDays')]"
+                    },
+                    "logAnalyticsSubscriptionId": {
+                        "value": "[parameters('logAnalyticsSubscriptionId')]"
+                    },
+                    "logAnalyticsResourceGroup": {
+                        "value": "[parameters('logAnalyticsResourceGroup')]"
+                    },
+                    "logAnalyticsWorkspaceName": {
+                        "value": "[parameters('logAnalyticsWorkspaceName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "sql-server"
+            ]
+        }
+    ],
+    "outputs": {}
+}
