@@ -8,27 +8,6 @@
                 "description": "Name of the storage account"
             }
         },
-        "accessTier": {
-            "type": "string",
-            "defaultValue": "",
-            "allowedValues": [
-                "Hot",
-                "Cool",
-                ""
-            ],
-            "metadata": {
-                "description": "This setting is required if using BlobStorage as the storageKind, otherwise can be left blank"
-            }
-        },
-        "storageKind": {
-            "type": "string",
-            "defaultValue": "Storage",
-            "allowedValues": [
-                "Storage",
-                "StorageV2",
-                "BlobStorage"
-            ]
-        },
         "keyVaultName": {
             "type": "string"
         },
@@ -55,6 +34,14 @@
         "aspInstances": {
             "type": "int"
         },
+        "aseHostingEnvironmentName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "aseResourceGroup": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "functionAppName": {
             "type": "string"
         },
@@ -62,10 +49,6 @@
             "type": "string"
         },
         "functionAppAppSettings": {
-            "type": "array",
-            "defaultValue": []
-        },
-        "functionAppConnectionStrings": {
             "type": "array",
             "defaultValue": []
         },
@@ -114,47 +97,6 @@
         "databaseName": {
             "type": "string"
         },
-        "databaseSkuName": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "databaseSizeBytes": {
-            "type": "string",
-            "defaultValue": ""
-        },
-        "databaseTier": {
-            "type": "string",
-            "defaultValue": "",
-            "allowedValues": [
-                "",
-                "Basic",
-                "Standard",
-                "Premium"
-            ]
-        },
-        "dataMaskingExemptPrincipals": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Semi-colon separated list of database principals who are exempt from the following data masking rules"
-            }
-        },
-        "dataMaskingRules": {
-            "type": "array",
-            "defaultValue": [],
-            "metadata": {
-                "description": "Object array where object is of type DataMaskingRuleProperties: https://docs.microsoft.com/en-us/azure/templates/microsoft.sql/servers/databases/datamaskingpolicies/rules#DataMaskingRuleProperties"
-            }
-        },
-        "diagnosticsRetentionDays": {
-            "type": "int",
-            "defaultValue": 0,
-            "minValue": 0,
-            "maxValue": 365,
-            "metadata": {
-                "descrtiption": "The number of days that diagnostic logs will be stored for. Default value is forever, max is 1 year."
-            }
-        },
         "logAnalyticsSubscriptionId": {
             "type": "string",
             "defaultValue": "[subscription().subscriptionId]",
@@ -190,12 +132,6 @@
                 "parameters": {
                     "storageAccountName": {
                         "value": "[parameters('storageAccountName')]"
-                    },
-                    "accessTier": {
-                        "value": "[parameters('accessTier')]"
-                    },
-                    "storageKind": {
-                        "value": "[parameters('storageKind')]"
                     }
                 }
             },
@@ -247,6 +183,12 @@
                     },
                     "aspInstances": {
                         "value": "[parameters('aspInstances')]"
+                    },
+                    "aseHostingEnvironmentName": {
+                        "value": "[parameters('aseHostingEnvironmentName')]"
+                    },
+                    "aseResourceGroup": {
+                        "value": "[parameters('aseResourceGroup')]"
                     }
                 }
             },
@@ -274,9 +216,6 @@
                     },
                     "functionAppAppSettings": {
                         "value": "[parameters('functionAppAppSettings')]"
-                    },
-                    "functionAppConnectionStrings": {
-                        "value": "[parameters('functionAppConnectionStrings')]"
                     }
                 }
             },
@@ -336,24 +275,6 @@
                     },
                     "sqlServerName": {
                         "value": "[parameters('sqlServerName')]"
-                    },
-                    "databaseSkuName": {
-                        "value": "[parameters('databaseSkuName')]"
-                    },
-                    "databaseSizeBytes": {
-                        "value": "[parameters('databaseSizeBytes')]"
-                    },
-                    "databaseTier": {
-                        "value": "[parameters('databaseTier')]"
-                    },
-                    "dataMaskingExemptPrincipals": {
-                        "value": "[parameters('dataMaskingExemptPrincipals')]"
-                    },
-                    "dataMaskingRules": {
-                        "value": "[parameters('dataMaskingRules')]"
-                    },
-                    "diagnosticsRetentionDays": {
-                        "value": "[parameters('diagnosticsRetentionDays')]"
                     },
                     "logAnalyticsSubscriptionId": {
                         "value": "[parameters('logAnalyticsSubscriptionId')]"
