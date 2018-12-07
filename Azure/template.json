@@ -96,6 +96,9 @@
         "databaseName": {
             "type": "string"
         },
+        "databaseSkuName": {
+            "type": "string"
+        },
         "logAnalyticsSubscriptionId": {
             "type": "string",
             "defaultValue": "[subscription().subscriptionId]",
@@ -279,6 +282,9 @@
                     },
                     "sqlServerName": {
                         "value": "[parameters('sqlServerName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('databaseSkuName')]"
                     },
                     "logAnalyticsSubscriptionId": {
                         "value": "[parameters('logAnalyticsSubscriptionId')]"
