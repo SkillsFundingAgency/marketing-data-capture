@@ -48,9 +48,8 @@
         "appServicePlanResourceGroup": {
             "type": "string"
         },
-        "functionAppAppSettings": {
-            "type": "array",
-            "defaultValue": []
+        "dataCaptureDatabaseConnectionString": {
+            "type": "string"
         },
         "sqlServerName": {
             "type": "string",
@@ -215,7 +214,12 @@
                         "value": "[parameters('appServicePlanResourceGroup')]"
                     },
                     "functionAppAppSettings": {
-                        "value": "[parameters('functionAppAppSettings')]"
+                        "value": [
+                            {
+                                "name": "DataCaptureDatabaseConnectionString",
+                                "value": "[parameters('dataCaptureDatabaseConnectionString')]"
+                            }
+                        ]
                     }
                 }
             },
