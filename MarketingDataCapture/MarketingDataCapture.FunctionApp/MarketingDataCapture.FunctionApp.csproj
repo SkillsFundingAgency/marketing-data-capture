@@ -46,6 +46,10 @@
     <ProjectReference Include="..\MarketingDataCapture.Models\MarketingDataCapture.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
