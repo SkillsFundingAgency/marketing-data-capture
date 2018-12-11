@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Repos\saatchi\SaatchiDataCapture\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.xml</DocumentationFile>
+    <DocumentationFile>bin\MarketingDataCapture.Logic.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
