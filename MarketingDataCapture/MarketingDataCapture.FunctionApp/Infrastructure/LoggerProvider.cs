@@ -1,8 +1,8 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
+﻿namespace MarketingDataCapture.FunctionApp.Infrastructure
 {
     using System;
     using Microsoft.Azure.WebJobs.Host;
-    using SaatchiDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Logic.Definitions;
 
     /// <summary>
     /// Implements <see cref="ILoggerProvider" />.

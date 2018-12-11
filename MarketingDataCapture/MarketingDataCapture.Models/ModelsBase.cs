@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Models
+﻿namespace MarketingDataCapture.Models
 {
     using Meridian.MeaningfulToString;
 

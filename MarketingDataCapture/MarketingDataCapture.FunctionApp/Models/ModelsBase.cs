@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models
+﻿namespace MarketingDataCapture.FunctionApp.Models
 {
     /// <summary>
     /// Abstract base class for all models in the

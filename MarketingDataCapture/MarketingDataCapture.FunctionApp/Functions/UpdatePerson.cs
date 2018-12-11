@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Functions
+﻿namespace MarketingDataCapture.FunctionApp.Functions
 {
     using System.Net;
     using Microsoft.AspNetCore.Http;
@@ -6,10 +6,10 @@
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
-    using SaatchiDataCapture.FunctionApp.Infrastructure;
-    using SaatchiDataCapture.Logic;
-    using SaatchiDataCapture.Logic.Definitions;
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.FunctionApp.Infrastructure;
+    using MarketingDataCapture.Logic;
+    using MarketingDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Entry class for the <c>update-person</c> function.
@@ -137,7 +137,7 @@
                 // Cookie is also optional. However if declared, then...
                 if (updatePerson.Cookie != null)
                 {
-                    person.Cookie = new SaatchiDataCapture.Models.Cookie()
+                    person.Cookie = new MarketingDataCapture.Models.Cookie()
                     {
                         // Needs the captured date.
                         Captured = updatePerson.Cookie.Captured.Value,

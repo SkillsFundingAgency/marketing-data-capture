@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace MarketingDataCapture.Logic.Definitions
 {
     /// <summary>
     /// Describes the operations of the <see cref="IPersonManager" /> factory.

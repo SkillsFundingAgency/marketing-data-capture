@@ -1,8 +1,8 @@
-﻿namespace SaatchiDataCapture.Data.Definitions
+﻿namespace MarketingDataCapture.Data.Definitions
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using SaatchiDataCapture.Data.Models;
+    using MarketingDataCapture.Data.Models;
 
     /// <summary>
     /// Describes the operations of the data capture database adapter.

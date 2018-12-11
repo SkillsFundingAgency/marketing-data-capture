@@ -1,13 +1,13 @@
-namespace SaatchiDataCapture.Logic.Tests
+namespace MarketingDataCapture.Logic.Tests
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using SaatchiDataCapture.Data.Definitions;
-    using SaatchiDataCapture.Data.Models;
-    using SaatchiDataCapture.Logic.Definitions;
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.Data.Definitions;
+    using MarketingDataCapture.Data.Models;
+    using MarketingDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Models;
 
     [TestClass]
     [ExcludeFromCodeCoverage]

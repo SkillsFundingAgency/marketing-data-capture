@@ -1,7 +1,7 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
+﻿namespace MarketingDataCapture.FunctionApp.Infrastructure
 {
     using System;
-    using SaatchiDataCapture.Data.Definitions;
+    using MarketingDataCapture.Data.Definitions;
 
     /// <summary>
     /// Implements <see cref="IDataCaptureDatabaseAdapterSettingsProvider" />.

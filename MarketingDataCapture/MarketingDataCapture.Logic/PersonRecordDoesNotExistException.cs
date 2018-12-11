@@ -1,9 +1,9 @@
-﻿namespace SaatchiDataCapture.Logic
+﻿namespace MarketingDataCapture.Logic
 {
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Custom exception thrown upon attempting to update a

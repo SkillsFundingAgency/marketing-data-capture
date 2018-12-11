@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Common.Models
+﻿namespace MarketingDataCapture.Common.Models
 {
     using System.Diagnostics.CodeAnalysis;
     using Meridian.MeaningfulToString;

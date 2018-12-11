@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace MarketingDataCapture.Logic.Definitions
 {
     using System;
     using System.Diagnostics.CodeAnalysis;

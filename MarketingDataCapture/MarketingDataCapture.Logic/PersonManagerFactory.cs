@@ -1,8 +1,8 @@
-﻿namespace SaatchiDataCapture.Logic
+﻿namespace MarketingDataCapture.Logic
 {
     using System.Diagnostics.CodeAnalysis;
-    using SaatchiDataCapture.Data.Definitions;
-    using SaatchiDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Data.Definitions;
+    using MarketingDataCapture.Logic.Definitions;
 
     /// <summary>
     /// Implements <see cref="IPersonManagerFactory" />.

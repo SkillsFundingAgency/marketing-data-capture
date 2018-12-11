@@ -1,4 +1,4 @@
-namespace SaatchiDataCapture.FunctionApp.Functions
+namespace MarketingDataCapture.FunctionApp.Functions
 {
     using System.Net;
     using Microsoft.AspNetCore.Http;
@@ -6,10 +6,10 @@ namespace SaatchiDataCapture.FunctionApp.Functions
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
-    using SaatchiDataCapture.FunctionApp.Infrastructure;
-    using SaatchiDataCapture.Logic;
-    using SaatchiDataCapture.Logic.Definitions;
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.FunctionApp.Infrastructure;
+    using MarketingDataCapture.Logic;
+    using MarketingDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Entry class for the <c>create-person</c> function.
@@ -113,7 +113,7 @@ namespace SaatchiDataCapture.FunctionApp.Functions
                         EmailAddress = createPerson.ContactDetail.EmailAddress,
                         EmailVerificationCompletion = createPerson.ContactDetail.EmailVerificationCompletion,
                     },
-                    Cookie = new SaatchiDataCapture.Models.Cookie()
+                    Cookie = new MarketingDataCapture.Models.Cookie()
                     {
                         Captured = createPerson.Cookie.Captured.Value,
                         CookieIdentifier = createPerson.Cookie.CookieIdentifier,

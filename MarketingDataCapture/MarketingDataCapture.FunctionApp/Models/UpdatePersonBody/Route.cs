@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Models.UpdatePersonBody
+﻿namespace MarketingDataCapture.FunctionApp.Models.UpdatePersonBody
 {
     using System;
     using System.ComponentModel.DataAnnotations;

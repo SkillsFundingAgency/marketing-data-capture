@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
+﻿namespace MarketingDataCapture.FunctionApp.Infrastructure
 {
     using System.Diagnostics.CodeAnalysis;
     using StructureMap.Graph;

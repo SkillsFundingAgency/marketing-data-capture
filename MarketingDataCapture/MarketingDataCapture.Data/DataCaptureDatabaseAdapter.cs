@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Data
+﻿namespace MarketingDataCapture.Data
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Dapper;
-    using SaatchiDataCapture.Data.Definitions;
-    using SaatchiDataCapture.Data.Models;
+    using MarketingDataCapture.Data.Definitions;
+    using MarketingDataCapture.Data.Models;
 
     /// <summary>
     /// Implements <see cref="IDataCaptureDatabaseAdapter" />.

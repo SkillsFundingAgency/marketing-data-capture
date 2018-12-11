@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.FunctionApp.Infrastructure
+﻿namespace MarketingDataCapture.FunctionApp.Infrastructure
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
-    using SaatchiDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Logic.Definitions;
     using StructureMap;
 
     /// <summary>

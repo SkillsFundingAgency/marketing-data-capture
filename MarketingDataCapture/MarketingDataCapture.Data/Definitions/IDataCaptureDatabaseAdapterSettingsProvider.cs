@@ -1,4 +1,4 @@
-﻿namespace SaatchiDataCapture.Data.Definitions
+﻿namespace MarketingDataCapture.Data.Definitions
 {
     /// <summary>
     /// Describes the operations of the

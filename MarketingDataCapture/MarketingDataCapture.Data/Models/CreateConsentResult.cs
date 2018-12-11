@@ -1,6 +1,6 @@
-﻿namespace SaatchiDataCapture.Data.Models
+﻿namespace MarketingDataCapture.Data.Models
 {
-    using SaatchiDataCapture.Data.Definitions;
+    using MarketingDataCapture.Data.Definitions;
 
     /// <summary>
     /// Represents the return type for the

@@ -1,10 +1,10 @@
-﻿namespace SaatchiDataCapture.Logic
+﻿namespace MarketingDataCapture.Logic
 {
     using System;
-    using SaatchiDataCapture.Data.Definitions;
-    using SaatchiDataCapture.Data.Models;
-    using SaatchiDataCapture.Logic.Definitions;
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.Data.Definitions;
+    using MarketingDataCapture.Data.Models;
+    using MarketingDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Implements <see cref="IPersonManager" />.

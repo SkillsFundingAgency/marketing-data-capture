@@ -1,6 +1,6 @@
-﻿namespace SaatchiDataCapture.Logic.Definitions
+﻿namespace MarketingDataCapture.Logic.Definitions
 {
-    using SaatchiDataCapture.Models;
+    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Describes the operations of the <see cref="Person" /> manager.
