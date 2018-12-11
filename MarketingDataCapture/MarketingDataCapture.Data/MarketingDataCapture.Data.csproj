@@ -5,23 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    
+
     <!-- Other -->
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
+    
 
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="All" />
-    
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SaatchiDataCapture.Data\SaatchiDataCapture.Data.csproj" />
-    <ProjectReference Include="..\SaatchiDataCapture.Models\SaatchiDataCapture.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarketingDataCapture.Common\MarketingDataCapture.Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -29,7 +30,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Repos\saatchi\SaatchiDataCapture\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.xml</DocumentationFile>
+    <DocumentationFile>C:\Repos\saatchi\SaatchiDataCapture\SaatchiDataCapture.Data\SaatchiDataCapture.Data.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>

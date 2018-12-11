@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SaatchiDataCapture.Common\SaatchiDataCapture.Common.csproj" />
+    <ProjectReference Include="..\MarketingDataCapture.Common\MarketingDataCapture.Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SaatchiDataCapture.Logic\SaatchiDataCapture.Logic.csproj" />
+    <ProjectReference Include="..\MarketingDataCapture.Logic\MarketingDataCapture.Logic.csproj" />
   </ItemGroup>
 
 </Project>
