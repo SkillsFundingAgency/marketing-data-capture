@@ -4,7 +4,7 @@
     using Meridian.MeaningfulToString;
 
     /// <summary>
-    /// Abstract base class for all models in the <c>SaatchiDataCapture</c>
+    /// Abstract base class for all models in the <c>MarketingDataCapture</c>
     /// namespace.
     /// </summary>
     [ExcludeFromCodeCoverage]

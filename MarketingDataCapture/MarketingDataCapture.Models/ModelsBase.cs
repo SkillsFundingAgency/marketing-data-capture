@@ -4,9 +4,10 @@
 
     /// <summary>
     /// Abstract base class for all models in the
-    /// <c>SaatchiDataCapture.Models</c> namespace.
+    /// <c>MarketingDataCapture.Models</c> namespace.
     /// </summary>
     public abstract class ModelsBase : Common.Models.ModelsBase
     {
+        // Nothing for now.
     }
 }

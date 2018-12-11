@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Abstract base class for all models in the
-    /// <c>SaatchiDataCapture.Data</c> namespace.
+    /// <c>MarketingDataCapture.Data</c> namespace.
     /// </summary>
     public abstract class ModelsBase : Common.Models.ModelsBase
     {
