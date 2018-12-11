@@ -6,10 +6,10 @@
     using System.IO;
     using System.Linq;
     using System.Net;
+    using MarketingDataCapture.Logic.Definitions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
-    using MarketingDataCapture.Logic.Definitions;
     using StructureMap;
 
     /// <summary>

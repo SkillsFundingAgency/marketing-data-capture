@@ -1,8 +1,8 @@
 ﻿namespace MarketingDataCapture.FunctionApp.Infrastructure
 {
     using System;
-    using Microsoft.Azure.WebJobs.Host;
     using MarketingDataCapture.Logic.Definitions;
+    using Microsoft.Azure.WebJobs.Host;
 
     /// <summary>
     /// Implements <see cref="ILoggerProvider" />.

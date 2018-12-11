@@ -1,15 +1,15 @@
 namespace MarketingDataCapture.FunctionApp.Functions
 {
     using System.Net;
+    using MarketingDataCapture.FunctionApp.Infrastructure;
+    using MarketingDataCapture.Logic;
+    using MarketingDataCapture.Logic.Definitions;
+    using MarketingDataCapture.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Host;
-    using MarketingDataCapture.FunctionApp.Infrastructure;
-    using MarketingDataCapture.Logic;
-    using MarketingDataCapture.Logic.Definitions;
-    using MarketingDataCapture.Models;
 
     /// <summary>
     /// Entry class for the <c>create-person</c> function.
