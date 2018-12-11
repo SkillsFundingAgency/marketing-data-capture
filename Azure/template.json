@@ -296,7 +296,9 @@
                     }
                 }
             },
-            "dependsOn": []
+            "dependsOn": [
+                "StorageAccount"
+            ]
         },
         {
             "apiVersion": "2017-05-10",
