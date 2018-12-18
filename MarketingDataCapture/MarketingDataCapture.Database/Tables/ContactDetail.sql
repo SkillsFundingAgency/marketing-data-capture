@@ -6,10 +6,10 @@
     EmailAddress NVARCHAR (256) NOT NULL,
     EmailVerificationCompletion DATETIME NULL,
     EmailVerified AS (CONVERT(BIT, CASE WHEN (EmailVerificationCompletion IS NULL) THEN 0 ELSE 1 END)) PERSISTED,
-    CONSTRAINT PK_ContactDetail PRIMARY KEY NONCLUSTERED (Id ASC),
+    CONSTRAINT PK_ContactDetail PRIMARY KEY CLUSTERED (Id ASC),
     CONSTRAINT FK_ContactDetail_Person FOREIGN KEY (Person_Id) REFERENCES Person (Id)
 );
 
 GO
-CREATE UNIQUE CLUSTERED INDEX IX_ContactDetail_EmailAddress
-    ON ContactDetail (EmailAddress ASC);
+CREATE NONCLUSTERED INDEX IX_ContactDetail_EmailAddress_Person_Id
+    ON ContactDetail(EmailAddress ASC, Person_Id ASC);
