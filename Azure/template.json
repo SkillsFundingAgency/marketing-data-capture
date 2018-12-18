@@ -99,6 +99,16 @@
         "databaseSkuName": {
             "type": "string"
         },
+        "databaseTier": {
+            "type": "string",
+            "defaultValue": "",
+            "allowedValues": [
+                "",
+                "Basic",
+                "Standard",
+                "Premium"
+            ]
+        },
         "logAnalyticsSubscriptionId": {
             "type": "string",
             "defaultValue": "[subscription().subscriptionId]",
@@ -319,6 +329,9 @@
                     },
                     "databaseSkuName": {
                         "value": "[parameters('databaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('databaseTier')]"
                     },
                     "logAnalyticsSubscriptionId": {
                         "value": "[parameters('logAnalyticsSubscriptionId')]"
