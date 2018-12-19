@@ -109,6 +109,10 @@
                 "Premium"
             ]
         },
+        "databaseSizeBytes": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "logAnalyticsSubscriptionId": {
             "type": "string",
             "defaultValue": "[subscription().subscriptionId]",
@@ -332,6 +336,9 @@
                     },
                     "databaseTier": {
                         "value": "[parameters('databaseTier')]"
+                    },
+                    "databaseSizeBytes": {
+                        "value": "[parameters('databaseSizeBytes')]"
                     },
                     "logAnalyticsSubscriptionId": {
                         "value": "[parameters('logAnalyticsSubscriptionId')]"
